@@ -1,0 +1,17 @@
+.kt-aside{
+    width:300px;
+}
+.kt-aside-menu .kt-menu__nav > .kt-menu__item > .kt-menu__heading .kt-menu__link-text,
+.kt-aside-menu .kt-menu__nav > .kt-menu__item > .kt-menu__link .kt-menu__link-text {
+    font-weight: 500;
+    font-size: 1rem;
+    text-transform: initial; }
+
+.kt-aside-menu .kt-menu__nav > .kt-menu__section .kt-menu__section-text {
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3px; }
+.kt-header{
+    background-color: #f8b500;
+}
