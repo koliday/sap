@@ -126,7 +126,7 @@ var KTDatatableChildDataLocalDemo = function() {
                     overflow: 'visible',
                     template: function() {
                         return '\
-		                  <button class="btn btn-primary">Create</button>\
+		                  <button id="create_quotation_btn" class="btn btn-primary">Create</button>\
 		                  \
 		              ';
                     },

@@ -76,11 +76,7 @@ var KTDatatableDataLocalDemo = function() {
                     title: 'Expected Profit',
                     textAlign: 'center',
                 },
-                {
-                    field: 'Description',
-                    title: 'Description',
-                    textAlign: 'center',
-                }, {
+                 {
                     field: 'Discount',
                     title: 'Discount',
                     sortable: false,
