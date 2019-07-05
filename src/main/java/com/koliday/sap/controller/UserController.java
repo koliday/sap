@@ -8,6 +8,9 @@ package com.koliday.sap.controller;
  *@date  2019/7/5
  */
 import com.alibaba.fastjson.JSON;
+import com.koliday.sap.dto.UserDTO;
+import com.koliday.sap.entity.EmployeeEntity;
+import com.koliday.sap.entity.UserEntity;
 import com.koliday.sap.service.intf.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @Controller
 public class UserController {
@@ -31,11 +36,32 @@ public class UserController {
 
     @PostMapping("/login")
     @ResponseBody
-    public String login(HttpServletRequest request){
+    public String login(HttpServletRequest request, HttpSession session){
         String username=request.getParameter("username");
-        String password=request.getParameter(("password"));
+        String password=request.getParameter("password");
         logger.info(username+" "+password);
-        Integer loginResult=userService.login(username,password);
+        Map<String,Object> loginResultMap=userService.login(username,password);
+        Integer loginResult=(Integer)loginResultMap.get("result");
+        logger.info(""+loginResult);
+        if(loginResult==1){
+           session.setAttribute("user", loginResultMap.get("user"));
+        }
         return JSON.toJSONString(loginResult);
+    }
+
+    @PostMapping("/register")
+    @ResponseBody
+    public String register(HttpServletRequest request){
+        String username=request.getParameter("username");
+        String password=request.getParameter("password");
+        String eno=request.getParameter("eno");
+        UserDTO user=new UserDTO();
+        EmployeeEntity employeeEntity=new EmployeeEntity();
+        employeeEntity.setEno(eno);
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmployeeEntity(employeeEntity);
+        Integer registerResult=userService.register(user);
+        return JSON.toJSONString(registerResult);
     }
 }

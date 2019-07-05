@@ -17,4 +17,12 @@
     <insert id="register" parameterType="com.koliday.sap.entity.UserEntity">
         insert into user values(null,#{user.username},#{user.password},#{user.eid},#{user.status})
     </insert>
+
+    <select id="getEmployeeByEno" resultType="com.koliday.sap.entity.EmployeeEntity">
+        select * from employee where eno = #{eno} and status=1
+    </select>
+
+    <select id="getUserByEno" resultType="com.koliday.sap.entity.UserEntity">
+        select * from user where eid=(select eid from employee where eno=#{eno}) and status=1
+    </select>
 </mapper>
