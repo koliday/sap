@@ -1,23 +1,24 @@
 'use strict';
 // Class definition
 
+
 var KTDatatableDataLocalDemo = function() {
     // Private functions
 
     // demo initializer
     var demo = function() {
         var dataJSONArray = JSON.parse('[' +
-            '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike","Actions":null},\n' +
-            '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike","Actions":null},\n' +
-            '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike","Actions":null},\n' +
-            '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike","Actions":null},\n' +
-            '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike","Actions":null},\n' +
-            '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike","Actions":null},\n' +
-            '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike","Actions":null},\n' +
-            '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike","Actions":null},\n' +
-            '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike","Actions":null}]');
+            '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike"},\n' +
+            '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike"},\n' +
+            '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike"},\n' +
+            '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike"},\n' +
+            '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike"},\n' +
+            '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike"},\n' +
+            '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike"},\n' +
+            '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike"},\n' +
+            '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike"}]');
 
-        var datatable = $('.kt-datatable').KTDatatable({
+        var datatable = $('#quotation_item_table').KTDatatable({
             // datasource definition
             data: {
                 type: 'local',
@@ -49,7 +50,6 @@ var KTDatatableDataLocalDemo = function() {
                     sortable: false,
                     width: 20,
                     type: 'number',
-                    selector: {class: 'kt-checkbox--solid'},
                     textAlign: 'center',
                 }, {
                     field: 'ItemID',
@@ -81,8 +81,8 @@ var KTDatatableDataLocalDemo = function() {
                     title: 'Description',
                     textAlign: 'center',
                 }, {
-                    field: 'Actions',
-                    title: 'Actions',
+                    field: 'Discount',
+                    title: 'Discount',
                     sortable: false,
                     width: 110,
                     overflow: 'visible',
@@ -90,11 +90,8 @@ var KTDatatableDataLocalDemo = function() {
                     autoHide: false,
                     template: function() {
                         return '\
-						<a href="view_client.html" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">\
-							<i class="la la-info-circle"></i>\
-						</a>\
-						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Delete">\
-							<i class="la la-trash"></i>\
+						<a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">\
+							<i class="la la-plus"></i>\
 						</a>\
 					';
                     },
@@ -121,7 +118,6 @@ var KTDatatableDataLocalDemo = function() {
         },
     };
 }();
-
 jQuery(document).ready(function() {
     KTDatatableDataLocalDemo.init();
 });
