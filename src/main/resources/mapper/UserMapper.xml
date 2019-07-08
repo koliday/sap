@@ -7,7 +7,7 @@
         <result column="username" jdbcType="VARCHAR" property="username" />
         <result column="passWord" jdbcType="CHAR" property="password" />
         <result column="eid" jdbcType="INTEGER" property="eid" />
-        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
     </resultMap>
 
     <select id="login" resultType="com.koliday.sap.entity.UserEntity">
@@ -25,4 +25,11 @@
     <select id="getUserByEno" resultType="com.koliday.sap.entity.UserEntity">
         select * from user where eid=(select eid from employee where eno=#{eno}) and status=1
     </select>
+
+    <select id="getEmployeeByEid" resultType="com.koliday.sap.entity.EmployeeEntity">
+        select * from employee where eid=#{eid} and status=1
+    </select>
+
+
+
 </mapper>

@@ -1,6 +1,6 @@
 'use strict';
 // Class definition
-
+var datatable;
 var KTDatatableDataLocalDemo = function() {
     // Private functions
 
@@ -17,7 +17,7 @@ var KTDatatableDataLocalDemo = function() {
             '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike","Actions":null},\n' +
             '{"RecordID":1,"ItemID":"0374-5070","Product":"DXTR1220","Quantity":"10","Net Value":"$50","Probability":"75%","Expected Profit":"$10","Description":"For Deluxe Touring Bike","Actions":null}]');
 
-        var datatable = $('.kt-datatable').KTDatatable({
+        datatable = $('.kt-datatable').KTDatatable({
             // datasource definition
             data: {
                 type: 'local',
@@ -90,7 +90,7 @@ var KTDatatableDataLocalDemo = function() {
                     autoHide: false,
                     template: function() {
                         return '\
-						<a href="view_client.html" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">\
+						<a id="test_info" href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">\
 							<i class="la la-info-circle"></i>\
 						</a>\
 						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Delete">\
@@ -125,3 +125,12 @@ var KTDatatableDataLocalDemo = function() {
 jQuery(document).ready(function() {
     KTDatatableDataLocalDemo.init();
 });
+$(document).ready(function () {
+    $(".kt-datatable").on("click","#test_info",function(){
+        alert($(this).attr("class"));
+        var selected=$(this).parent().parent().parent().children("td:eq(2)").text();
+        alert(selected);
+        // $("#create_contact_person_title").text("Create Contact Person For Client "+);
+        // $("#create_contact_person_content").show();
+    });
+})

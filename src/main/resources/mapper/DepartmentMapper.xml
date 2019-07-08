@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koliday.sap.mapper.DepartmentMapper">
+
+    <resultMap id="DepMap" type="com.koliday.sap.mapper.DepartmentMapper">
+        <id column="depid" jdbcType="INTEGER" property="depid" />
+        <result column="depname" jdbcType="VARCHAR" property="depname" />
+
+    </resultMap>
+
+
+
+    <select id="getDepList" resultType="com.koliday.sap.entity.DepartmentEntity">
+        select * from department_list;
+    </select>
+
+
+</mapper>
+
+

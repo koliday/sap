@@ -3,15 +3,19 @@ package com.koliday.sap.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 public class ClientEntity {
     private Integer clid;
     private String clno;
     private String clname;
-    private String contact;
-    private String address;
+    private String clcontact;
+    private String claddress;
     private Integer city;
     private String postcode;
     private Integer creator;
+    private Long createtime;
+    private Integer status;
 }

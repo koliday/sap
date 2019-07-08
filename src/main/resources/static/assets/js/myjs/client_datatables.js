@@ -6,19 +6,16 @@ var KTDatatableDataLocalDemo = function() {
 
 	// demo initializer
 	var demo = function() {
-		var dataJSONArray = JSON.parse('[' +
-			'{"RecordID":1,"CustomerID":"0374-5070","Type":"Individual","Name":"cc","Date":"3/28/1998","Actions":null},\n' +
-            '{"RecordID":1,"CustomerID":"0374-5070","Type":"Company","Name":"cc","Date":"3/28/1998","Actions":null},\n' +
-            '{"RecordID":1,"CustomerID":"0374-5070","Type":"Individual","Name":"cc","Date":"3/28/1998","Actions":null},\n' +
-            '{"RecordID":1,"CustomerID":"0374-5070","Type":"Company","Name":"cc","Date":"3/28/1998","Actions":null},\n' +
-            '{"RecordID":1,"CustomerID":"0374-5070","Type":"Individual","Name":"cc","Date":"3/28/1998","Actions":null},\n' +
-            '{"RecordID":1,"CustomerID":"0374-5070","Type":"Individual","Name":"cc","Date":"3/28/1998","Actions":null}]');
 
 		var datatable = $('.kt-datatable').KTDatatable({
 			// datasource definition
 			data: {
-				type: 'local',
-				source: dataJSONArray,
+				type: 'remote',
+                source: {
+                    read: {
+                        url: 'http://localhost:8080/getAllClients',
+                    },
+                },
 				pageSize: 10,
 			},
 
@@ -40,30 +37,30 @@ var KTDatatableDataLocalDemo = function() {
 
 			// columns definition
 			columns: [
-				{
-					field: 'RecordID',
-					title: '#',
-					sortable: false,
-					width: 20,
-					type: 'number',
-					selector: {class: 'kt-checkbox--solid'},
-					textAlign: 'center',
-				}, {
-					field: 'CustomerID',
-					title: 'CustomerID',
-                    textAlign: 'center',
-				}, {
-					field: 'Type',
-					title: 'Type',
-                    textAlign: 'center',
-				}, {
-                    field: 'Name',
-                    title: 'Name',
+                {
+                    field: 'clid',
+                    title: 'clid',
+                    sortable: false,
+                    width: 0,
+                    type: 'number',
                     textAlign: 'center',
                 },
 				{
-					field: 'Date',
-					title: 'Date',
+					field: 'clno',
+					title: 'Client No.',
+                    textAlign: 'center',
+				}, {
+					field: 'clname',
+					title: 'Name',
+                    textAlign: 'center',
+				}, {
+                    field: 'creator',
+                    title: 'Creator',
+                    textAlign: 'center',
+                },
+				{
+					field: 'createtime',
+					title: 'Create Time',
 					type: 'date',
 					format: 'MM/DD/YYYY',
                     textAlign: 'center',
@@ -77,7 +74,7 @@ var KTDatatableDataLocalDemo = function() {
 					autoHide: false,
 					template: function() {
 						return '\
-						<a href="view_client.html" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">\
+						<a href="javascript:;" id="view_client" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">\
 							<i class="la la-info-circle"></i>\
 						</a>\
 						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Delete">\

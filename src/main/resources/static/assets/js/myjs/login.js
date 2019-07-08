@@ -26,7 +26,7 @@ $(document).ready(function () {
            dataType: "json",
            success: function (data) {
                if(data==1){
-                   window.location.href="/clientmanagement";
+                   window.location.href="/clientoverview";
                    return;
                }else if(data==-1){
                    alert_text.text("Username not exists!");

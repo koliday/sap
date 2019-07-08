@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koliday.sap.mapper.FuncMapper">
+
+    <resultMap id="FuncMap" type="com.koliday.sap.mapper.FuncMapper">
+        <id column="funcid" jdbcType="INTEGER" property="funcid" />
+        <result column="funcname" jdbcType="VARCHAR" property="funcname" />
+
+    </resultMap>
+
+
+
+    <select id="getFuncList" resultType="com.koliday.sap.entity.FuncEntity">
+        select * from func_list;
+    </select>
+
+
+</mapper>
+
+

@@ -39,10 +39,8 @@ public class UserController {
     public String login(HttpServletRequest request, HttpSession session){
         String username=request.getParameter("username");
         String password=request.getParameter("password");
-        logger.info(username+" "+password);
         Map<String,Object> loginResultMap=userService.login(username,password);
         Integer loginResult=(Integer)loginResultMap.get("result");
-        logger.info(""+loginResult);
         if(loginResult==1){
            session.setAttribute("user", loginResultMap.get("user"));
         }

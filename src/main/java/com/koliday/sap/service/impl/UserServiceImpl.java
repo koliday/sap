@@ -28,11 +28,13 @@ public class UserServiceImpl implements UserService {
             resultMap.put("result", -1);
             return resultMap;
         }
+        EmployeeEntity employee = userMapper.getEmployeeByEid(user.getEid());
         String correctPassword=user.getPassword();
         //用户名存在则检查密码是否正确，正确返回1，错误返回-2
         if(MD5Util.encodePassword(username,password).equals(correctPassword)){
             resultMap.put("result", 1);
-            resultMap.put("user",user);
+            UserDTO userDTO=new UserDTO(user,employee);
+            resultMap.put("user",userDTO);
         }else{
             resultMap.put("result", -2);
 

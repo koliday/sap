@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koliday.sap.mapper.ClientMapper">
+
+    <resultMap id="ClientMap" type="com.koliday.sap.mapper.ClientMapper">
+        <id column="clid" jdbcType="INTEGER" property="clid" />
+        <result column="clno" jdbcType="CHAR" property="clno" />
+        <result column="clname" jdbcType="VARCHAR" property="clname" />
+        <result column="clcontact" jdbcType="VARCHAR" property="clcontact" />
+        <result column="claddress" jdbcType="VARCHAR" property="claddress" />
+        <result column="city" jdbcType="INTEGER" property="city" />
+        <result column="postcode" jdbcType="VARCHAR" property="postcode" />
+        <result column="creator" jdbcType="INTEGER" property="creator" />
+        <result column="createtime" jdbcType="BIGINT" property="createtime" />
+        <result column="status" jdbcType="TINYINT" property="status"/>
+    </resultMap>
+
+    <resultMap id="CPMap" type="com.koliday.sap.mapper.ClientMapper">
+        <id column="cpid" jdbcType="INTEGER" property="cpid" />
+        <result column="clid" jdbcType="INTEGER" property="clid" />
+        <result column="cpname" jdbcType="VARCHAR" property="cpname" />
+        <result column="cpcontact" jdbcType="VARCHAR" property="cpcontact" />
+        <result column="cpaddress" jdbcType="VARCHAR" property="cpaddress" />
+        <result column="deptno" jdbcType="INTEGER" property="deptno" />
+        <result column="func" jdbcType="INTEGER" property="func" />
+        <result column="vip" jdbcType="INTEGER" property="vip" />
+        <result column="callfreq" jdbcType="INTEGER" property="callfreq" />
+        <result column="creator" jdbcType="INTEGER" property="creator" />
+        <result column="createtime" jdbcType="BIGINT" property="createtime" />
+        <result column="status" jdbcType="TINYINT" property="status"/>
+    </resultMap>
+
+
+
+    <insert id="addClient" useGeneratedKeys="true" keyProperty="clid" parameterType="com.koliday.sap.entity.ClientEntity">
+        insert into client values(null,#{client.clno},#{client.clname},#{client.clcontact},#{client.claddress},#{client.city},#{client.postcode},#{client.creator},#{client.createtime},#{client.status});
+    </insert>
+
+    <insert id="addContactPerson" parameterType="com.koliday.sap.entity.ContactPersonEntity">
+        insert into contactperson values(null,#{cp.clid},#{cp.cpname},#{cp.cpcontact},#{cp.cpaddress},#{cp.deptno},#{cp.func},#{cp.vip},#{cp.callfreq},#{cp.creator},#{cp.createtime},#{cp.status});
+    </insert>
+
+    <select id="selectClientCount" resultType="java.lang.Integer">
+        select count(*) from client
+    </select>
+
+    <select id="getAllClientsByUid" resultType="com.koliday.sap.entity.ClientEntity">
+        select * from client where creator=#{uid}
+    </select>
+    <update id="updateClientByClid" parameterType="com.koliday.sap.entity.ClientEntity">
+        update client set clname=#{client.clname},clcontact=#{client.clcontact},claddress=#{client.claddress},city=#{client.city},postcode=#{client.postcode} where clid=#{client.clid}
+    </update>
+    <select id="getClientByClid" resultType="com.koliday.sap.entity.ClientEntity">
+        select * from client where clid=#{clid}
+    </select>
+    <select id="getContactPersonListByClid" resultType="com.koliday.sap.entity.ContactPersonEntity">
+        select * from contactperson where clid=#{clid} and status=1;
+    </select>
+
+    <update id="updateContactPerson" parameterType="com.koliday.sap.entity.ContactPersonEntity">
+        update contactperson set cpname=#{cp.cpname},cpcontact=#{cp.cpcontact},cpaddress=#{cp.cpaddress},deptno=#{cp.deptno},func=#{cp.func},vip=#{cp.vip},callfreq=#{cp.callfreq} where cpid=#{cp.cpid}
+    </update>
+
+
+
+
+</mapper>
+
+

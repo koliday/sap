@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koliday.sap.mapper.VipMapper">
+
+    <resultMap id="VipMap" type="com.koliday.sap.mapper.VipMapper">
+        <id column="vipid" jdbcType="INTEGER" property="vipid" />
+        <result column="vipname" jdbcType="VARCHAR" property="vipname" />
+
+    </resultMap>
+
+
+
+    <select id="getVipList" resultType="com.koliday.sap.entity.VipEntity">
+        select * from vip_list;
+    </select>
+
+
+</mapper>
+
+
