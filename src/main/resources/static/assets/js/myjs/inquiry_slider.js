@@ -6,11 +6,11 @@ var KTnoUiSliderDemos = function() {
      
     var demo1 = function() {
         // init slider
-        var slider = document.getElementById('kt_nouislider_1');
+        var slider = document.getElementById('probability_slide');
         noUiSlider.create(slider, {
             start: [ 0 ],
             connect: [true, false],
-            step: 10,
+            step: 1,
             range: {
                 'min': [ 0 ],
                 'max': [ 100 ]
@@ -23,7 +23,7 @@ var KTnoUiSliderDemos = function() {
 
 
         // init slider input
-        var sliderInput = document.getElementById('kt_nouislider_1_input');
+        var sliderInput = document.getElementById('probability_input');
 
         slider.noUiSlider.on('update', function( values, handle ) {
             sliderInput.value = values[handle];

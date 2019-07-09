@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koliday.sap.mapper.OrderMapper">
+
+
+    <select id="selectInquiryCount" resultType="java.lang.Integer">
+        select count(*) from inquiry;
+    </select>
+    <select id="selectItemCount" resultType="java.lang.Integer">
+        select count(*) from item;
+    </select>
+
+    <insert id="createInquiry" useGeneratedKeys="true" keyProperty="inid" parameterType="com.koliday.sap.entity.InquiryEntity">
+        insert into inquiry values(null,#{inquiry.inno},#{inquiry.client},#{inquiry.creator},#{inquiry.createDate},#{inquiry.netValue},#{inquiry.expectProfit},#{inquiry.validFrom},#{inquiry.validTo},#{inquiry.ifHaveQuo});
+    </insert>
+
+    <insert id="createInquiryItem" parameterType="java.util.List">
+        insert into item
+        (itemno,pid,quantity,price,netvalue,probability,expectprofit,inid)
+        values
+        <foreach collection="itemlist" item="item" index="index" separator=",">
+            (
+            #{item.itemno},
+            #{item.pid},
+            #{item.quantity},
+            #{item.price},
+            #{item.netvalue},
+            #{item.probability},
+            #{item.expectprofit},
+            #{item.inid}
+            )
+        </foreach>
+    </insert>
+
+    <select id="getAllInquiry" resultType="com.koliday.sap.dto.InquiryDTO">
+        select inid,inno,(select clname from client where clid=client) client,(select username from user where uid=creator) creator,createdate from inquiry where creator=#{uid} and ifhavequo=0;
+    </select>
+
+    <select id="getInquiry" resultType="com.koliday.sap.dto.InquiryDTO">
+        select inid,inno,(select clno from client where clid=client) client,(select username from user where uid=creator) creator,createdate,netvalue,expectprofit,validfrom,validto from inquiry where inid=#{inid};
+    </select>
+
+    <select id="getInquiryItem" resultType="com.koliday.sap.dto.InquiryItemDTO">
+        select itemno,(select pname from product where product.pid=item.pid) pname,quantity,netvalue,probability,expectprofit from item where inid=#{inid};
+    </select>
+
+
+
+
+</mapper>
+
+

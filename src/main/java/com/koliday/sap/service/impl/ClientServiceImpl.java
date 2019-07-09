@@ -1,8 +1,13 @@
 package com.koliday.sap.service.impl;
 
+import com.koliday.sap.dto.ClientDTO;
+import com.koliday.sap.dto.UserDTO;
 import com.koliday.sap.entity.ClientEntity;
 import com.koliday.sap.entity.ContactPersonEntity;
+import com.koliday.sap.entity.EmployeeEntity;
+import com.koliday.sap.entity.UserEntity;
 import com.koliday.sap.mapper.ClientMapper;
+import com.koliday.sap.mapper.UserMapper;
 import com.koliday.sap.service.intf.ClientService;
 import com.koliday.sap.utils.IdConvertToNoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,8 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private ClientMapper clientMapper;
 
+    @Autowired
+    private UserMapper userMapper;
     @Transactional
     @Override
     public Integer addClientAndContactPerson(ClientEntity client, ContactPersonEntity contactPerson) {
@@ -52,8 +59,16 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<ClientEntity> getAllClientsByUid(Integer uid) {
-        return clientMapper.getAllClientsByUid(uid);
+    public List<ClientDTO> getAllClientsByUid(Integer uid) {
+        List<ClientDTO> result=new ArrayList<>();
+        List<ClientEntity> clientEntityList = clientMapper.getAllClientsByUid(uid);
+        for(ClientEntity clientEntity:clientEntityList){
+            Integer creator=clientEntity.getCreator();
+            UserEntity userEntity = userMapper.getUserByUid(creator);
+            ClientDTO clientDTO=new ClientDTO(clientEntity,userEntity.getUsername());
+            result.add(clientDTO);
+        }
+        return result;
     }
 
     @Override

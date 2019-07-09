@@ -1,6 +1,7 @@
 package com.koliday.sap.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.koliday.sap.dto.ClientDTO;
 import com.koliday.sap.dto.UserDTO;
 import com.koliday.sap.entity.*;
 import com.koliday.sap.service.intf.ClientService;
@@ -104,8 +105,8 @@ public class ClientManagementController {
     public String getAllClients(HttpSession session){
         UserDTO user=(UserDTO)session.getAttribute("user");
         Integer uid=user.getUid();
-        List<ClientEntity> clientEntityList=clientService.getAllClientsByUid(uid);
-        return JSON.toJSONString(clientEntityList);
+        List<ClientDTO> clientDTOList=clientService.getAllClientsByUid(uid);
+        return JSON.toJSONString(clientDTOList);
     }
 
 

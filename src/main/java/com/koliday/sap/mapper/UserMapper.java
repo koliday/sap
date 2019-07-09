@@ -17,4 +17,6 @@ public interface UserMapper {
     UserEntity getUserByEno(@Param("eno")String eno);
 
     EmployeeEntity getEmployeeByEid(@Param("eid")Integer eid);
+
+    UserEntity getUserByUid(@Param("uid")Integer uid);
 }

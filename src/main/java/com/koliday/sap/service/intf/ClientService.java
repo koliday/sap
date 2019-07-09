@@ -1,5 +1,6 @@
 package com.koliday.sap.service.intf;
 
+import com.koliday.sap.dto.ClientDTO;
 import com.koliday.sap.entity.ClientEntity;
 import com.koliday.sap.entity.ContactPersonEntity;
 
@@ -10,7 +11,7 @@ public interface ClientService {
     Integer addClient(ClientEntity client);
     Integer addContactPersonToClient(ContactPersonEntity contactPerson);
 
-    List<ClientEntity> getAllClientsByUid(Integer uid);
+    List<ClientDTO> getAllClientsByUid(Integer uid);
 
     Integer updateClient(ClientEntity client);
 

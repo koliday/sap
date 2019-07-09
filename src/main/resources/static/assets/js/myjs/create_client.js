@@ -2,6 +2,8 @@ $(document).ready(function() {
     $("#create_contact_person_content").hide();
 
     //client
+    var clid;
+    var clno;
     var client_name;
     var office_tel;
     var city_select;
@@ -51,7 +53,9 @@ $(document).ready(function() {
         }else{
             $("#address").addClass("is-valid");
         }
+
         if(invalidcount>0){
+
             $("#client_name").val(client_name);
             $("#office_tel").val(office_tel);
             $("#city_select").val(city_select);
@@ -122,6 +126,8 @@ $(document).ready(function() {
 
         $("#create_contact_person_content").hide();
         $("#create_customer_content").show(500);
+
+
 
 
         $("#client_name").val(client_name);
@@ -205,12 +211,14 @@ $(document).ready(function() {
             dataType: "json",
             success: function (data) {
                 if(data>=1){
+                    clid=data;
                     var clidString=data+"";
                     var result="CL";
                     for(var i=0;i<6-clidString.length;i++){
                         result+="0";
                     }
                     result+=clidString;
+                    clno=result;
                     $("#success_text").text("Client "+result+" has been created!")
                     $("#success_alert").slideDown();
                 }else{
@@ -229,16 +237,104 @@ $(document).ready(function() {
         });
 
     });
+    $("#submitcp").click(function () {
+        cp_name=$("#cp_name").val();
+        cp_contact=$("#cp_contact").val();
+        vip=$("#vip").val();
+        dep_no=$("#dep_no").val();
+        cp_function=$("#cp_function").val();
+        cp_address=$("#cp_address").val();
+        callfreq=$("#callfreq").val();
+
+
+        if($("input").hasClass("is-invalid")||$("input").hasClass("is-valid")){
+            $("input").attr("class","form-control");
+        }
+        var invalidcount=0;
+        if(cp_name == "" || $("#cp_name").length>20){
+            $("#cp_name").addClass("is-invalid");
+            invalidcount++;
+        }else{
+            $("#cp_name").addClass("is-valid");
+        }
+        if(cp_contact == "" || $("#cp_contact").length>11){
+            $("#cp_contact").addClass("is-invalid");
+            invalidcount++;
+        }else{
+            $("#cp_contact").addClass("is-valid");
+        }
+        if(cp_address == "" || $("#cp_address").length>100){
+            $("#cp_address").addClass("is-invalid");
+            invalidcount++;
+        }else{
+            $("#cp_address").addClass("is-valid");
+        }
+
+        if(invalidcount>0){
+            $("#cp_name").val(cp_name);
+            $("#cp_contact").val(cp_contact);
+            $("#vip").val(vip);
+            $("#dep_no").val(dep_no);
+            $("#cp_function").val(cp_function);
+            $("#cp_address").val(cp_address);
+            $("#callfreq").val(callfreq);
+            return;
+        }
+
+
+
+        $("input").attr("disabled","disabled");
+        $("select").attr("disabled",true);
+        $("#submitcpdiv").hide();
+
+
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/createcontactperson",
+            data:{
+                clid:clid,
+                cpname:cp_name,
+                cp_contact:cp_contact,
+                cp_address:cp_address,
+                deptno:dep_no,
+                func:cp_function,
+                vip:vip,
+                callfreq:callfreq
+            },
+            dataType: "json",
+            success: function (data) {
+                if(data==1){
+                    $("#success_text").text("Contact Person has been created for Client "+clno+" !");
+                    $("#success_alert").slideDown();
+                }else{
+                    $("#fail_text").text("Error when creating contact person!Please retry!");
+                    $("#fail_alert").slideDown();
+                    $("input").removeAttr("disabled");
+                    $("select").removeAttr("disabled");
+                    $("#submitcp").show();
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.statusText);
+            }
+        });
+
+    })
     $(document).on("click","#create_another_contact_person",function(){
-        $("#success_alert").remove();
+        if($("input").hasClass("is-invalid")||$("input").hasClass("is-valid")){
+            $("input").attr("class","form-control");
+        }
+        $("#success_alert").hide();
         $("input").removeAttr("disabled");
         $("input").val("");
         $("select").removeAttr("disabled");
         $("select").val(1);
-        $("#submit").show();
+        $("#submitcpdiv").show();
     });
     $(document).on("click","#view_created_customer",function(){
-        window.location.href="view_client.html";
+        // window.location.href="view_client.html";
     });
 
 

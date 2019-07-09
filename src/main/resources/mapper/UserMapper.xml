@@ -29,6 +29,9 @@
     <select id="getEmployeeByEid" resultType="com.koliday.sap.entity.EmployeeEntity">
         select * from employee where eid=#{eid} and status=1
     </select>
+    <select id="getUserByUid" resultType="com.koliday.sap.entity.UserEntity">
+        select * from user where uid=#{uid}
+    </select>
 
 
 

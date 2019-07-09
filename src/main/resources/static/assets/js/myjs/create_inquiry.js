@@ -55,17 +55,9 @@ jQuery(document).ready(function() {
     KTBootstrapDatepicker.init();
 
 
-    $("#add_new_inquiry_btn").click(function () {
-        $("#create_inquiry_success_alert").slideDown(500);
-        $("input").attr("disabled","disabled");
-        $(".kt-datatable").attr("disabled","disabled");
-        // $(".kt-datatable").dataTable({
-        //     sortable: true,
-        // });
-        $(".kt-datatable a").removeAttr("href");
-        $("#add_item_btn").hide();
-        $(this).hide();
 
-    });
+
+
+
 
 });

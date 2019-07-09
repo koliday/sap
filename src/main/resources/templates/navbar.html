@@ -25,7 +25,7 @@
             <!--begin: User bar -->
             <div class="kt-header__topbar-item kt-header__topbar-item--user">
                 <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
-                    <span class="kt-header__topbar-username kt-visible-desktop" th:text="${session.user.username}"></span>
+                    <span id="username" class="kt-header__topbar-username kt-visible-desktop" th:text="${session.user.username}"></span>
                     <img alt="Pic" th:src="@{/img/duckliu.jpg}" width="40" height="50" />
                     <span class="kt-header__topbar-icon kt-bg-brand kt-hidden"><b>S</b></span>
                 </div>
