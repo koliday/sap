@@ -3,7 +3,9 @@ package com.koliday.sap.service.impl;
 import com.koliday.sap.dto.InquiryDTO;
 import com.koliday.sap.dto.InquiryDetailDTO;
 import com.koliday.sap.dto.InquiryItemDTO;
+import com.koliday.sap.dto.QuotationItemDTO;
 import com.koliday.sap.entity.InquiryEntity;
+import com.koliday.sap.entity.QuotationEntity;
 import com.koliday.sap.mapper.OrderMapper;
 import com.koliday.sap.service.intf.OrderService;
 import com.koliday.sap.utils.IdConvertToNoUtil;
@@ -20,7 +22,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderMapper orderMapper;
     @Transactional
     @Override
-    public Integer createInquiry(InquiryEntity inquiry, List<InquiryItemDTO> inquiryItemDTOList) {
+    public synchronized Integer createInquiry(InquiryEntity inquiry, List<InquiryItemDTO> inquiryItemDTOList) {
         //首先生成inno
         Integer inquiryCount=orderMapper.selectInquiryCount();
         String inno= IdConvertToNoUtil.convertInquiry(inquiryCount+1);
@@ -65,5 +67,52 @@ public class OrderServiceImpl implements OrderService {
         inquiryDetailDTO.setInquiryDTO(inquiryDTO);
         inquiryDetailDTO.setInquiryItemDTOList(inquiryItemDTOList);
         return inquiryDetailDTO;
+    }
+
+
+    @Override
+    public List<InquiryDTO> getQuotationRefInquiry(Integer uid) {
+        return orderMapper.getQuotationRefInquiry(uid);
+    }
+
+
+    @Transactional
+    @Override
+    public synchronized Integer createQuotation(QuotationEntity quotation, List<QuotationItemDTO> quotationItemDTOList) {
+        //首先生成quno
+        Integer quotationCount=orderMapper.selectQuotationCount();
+        String quno= IdConvertToNoUtil.convertQuotation(quotationCount+1);
+        quotation.setQuno(quno);
+        Integer quotationResult=createQuotation(quotation);
+        if(quotationResult<1)
+            return 0;
+        Integer quid=quotation.getQuid();
+
+        for(QuotationItemDTO quotationItemDTO:quotationItemDTOList){
+            quotationItemDTO.setQuid(quid);
+        }
+        Integer inquiryItemResult=createQuotationItem(quotationItemDTOList);
+        if(inquiryItemResult<1)
+            return 0;
+        Integer updateinquirystatus=updateInquiryStatus(quotation);
+        if(updateinquirystatus<1)
+            return 0;
+        return quid;
+    }
+
+    private Integer updateInquiryStatus(QuotationEntity quotationEntity){
+        return orderMapper.updateInquiryStatus(quotationEntity);
+    }
+
+    private Integer createQuotation(QuotationEntity quotationEntity){
+        return orderMapper.createQuotation(quotationEntity);
+    }
+
+    private Integer createQuotationItem(List<QuotationItemDTO> quotationItemDTOList){
+        Integer result=0;
+        for(QuotationItemDTO quotationItemDTO:quotationItemDTOList){
+            result+=orderMapper.createQuotationItem(quotationItemDTO);
+        }
+        return result;
     }
 }

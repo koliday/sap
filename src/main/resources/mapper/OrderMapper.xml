@@ -6,12 +6,15 @@
     <select id="selectInquiryCount" resultType="java.lang.Integer">
         select count(*) from inquiry;
     </select>
+    <select id="selectQuotationCount" resultType="java.lang.Integer">
+        select count(*) from quotation;
+    </select>
     <select id="selectItemCount" resultType="java.lang.Integer">
         select count(*) from item;
     </select>
 
     <insert id="createInquiry" useGeneratedKeys="true" keyProperty="inid" parameterType="com.koliday.sap.entity.InquiryEntity">
-        insert into inquiry values(null,#{inquiry.inno},#{inquiry.client},#{inquiry.creator},#{inquiry.createDate},#{inquiry.netValue},#{inquiry.expectProfit},#{inquiry.validFrom},#{inquiry.validTo},#{inquiry.ifHaveQuo});
+        insert into inquiry values(null,#{inquiry.inno},#{inquiry.client},#{inquiry.creator},#{inquiry.createdate},#{inquiry.netvalue},#{inquiry.expectprofit},#{inquiry.validfrom},#{inquiry.validto},#{inquiry.ifhavequo});
     </insert>
 
     <insert id="createInquiryItem" parameterType="java.util.List">
@@ -33,7 +36,7 @@
     </insert>
 
     <select id="getAllInquiry" resultType="com.koliday.sap.dto.InquiryDTO">
-        select inid,inno,(select clname from client where clid=client) client,(select username from user where uid=creator) creator,createdate from inquiry where creator=#{uid} and ifhavequo=0;
+        select inid,inno,(select clname from client where clid=client) client,(select username from user where uid=creator) creator,createdate from inquiry where creator=#{uid};
     </select>
 
     <select id="getInquiry" resultType="com.koliday.sap.dto.InquiryDTO">
@@ -41,11 +44,24 @@
     </select>
 
     <select id="getInquiryItem" resultType="com.koliday.sap.dto.InquiryItemDTO">
-        select itemno,(select pname from product where product.pid=item.pid) pname,quantity,netvalue,probability,expectprofit from item where inid=#{inid};
+        select itemid,itemno,(select pname from product where product.pid=item.pid) pname,quantity,netvalue,probability,expectprofit from item where inid=#{inid};
     </select>
 
+    <select id="getQuotationRefInquiry" resultType="com.koliday.sap.dto.InquiryDTO">
+        select inid,inno,(select clname from client where clid=client) client,(select username from user where uid=creator) creator,createdate from inquiry where creator=#{uid} and ifhavequo=0;
+    </select>
 
+    <insert id="createQuotation" useGeneratedKeys="true" keyProperty="quid" parameterType="com.koliday.sap.entity.QuotationEntity">
+        insert into quotation values(null,#{quotation.quno},#{quotation.inid},(select client from inquiry where inquiry.inid= #{quotation.inid}),#{quotation.creator},#{quotation.createdate},(select inquiry.netvalue from inquiry where inquiry.inid= #{quotation.inid}),#{quotation.expectvalue},#{quotation.discount},#{quotation.netdiscount},#{quotation.itemdiscount},#{quotation.validfrom},#{quotation.validto},#{quotation.reqdate},#{quotation.ifhaveor});
+    </insert>
 
+    <update id="createQuotationItem" parameterType="com.koliday.sap.dto.QuotationItemDTO">
+        update item set itemdiscount=#{item.discount},quid= #{item.quid} where itemid=#{item.itemid};
+    </update>
+
+    <update id="updateInquiryStatus" parameterType="com.koliday.sap.entity.QuotationEntity">
+        update inquiry set ifhavequo=1 where inid=#{quotation.inid};
+    </update>
 
 </mapper>
 

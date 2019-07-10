@@ -26,4 +26,13 @@ public class IdConvertToNoUtil {
         }
         return result+=itemidString;
     }
+
+    public static String convertQuotation(int quid) {
+        String quidString=String.valueOf(quid);
+        String result="QT";
+        for(int i=0;i<6-quidString.length();i++){
+            result+="0";
+        }
+        return result+=quidString;
+    }
 }

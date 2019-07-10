@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 public class InquiryItemDTO {
 
     private Integer inid;
+    private Integer itemid;
     private String itemno;
     @JSONField(name="product_id")
     private Integer pid;
@@ -26,17 +27,5 @@ public class InquiryItemDTO {
     @JSONField(name="exp_profit")
     private BigDecimal expectprofit;
 
-    @Override
-    public String toString() {
-        return "InquiryItemDTO{" +
-                "inid=" + inid +
-                ", itemno='" + itemno + '\'' +
-                ", pid=" + pid +
-                ", quantity=" + quantity +
-                ", price=" + price +
-                ", netvalue=" + netvalue +
-                ", probability=" + probability +
-                ", expectprofit=" + expectprofit +
-                '}';
-    }
+
 }

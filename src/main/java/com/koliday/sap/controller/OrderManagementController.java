@@ -1,12 +1,10 @@
 package com.koliday.sap.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.koliday.sap.dto.InquiryDTO;
-import com.koliday.sap.dto.InquiryDetailDTO;
-import com.koliday.sap.dto.InquiryItemDTO;
-import com.koliday.sap.dto.UserDTO;
+import com.koliday.sap.dto.*;
 import com.koliday.sap.entity.InquiryEntity;
 import com.koliday.sap.entity.ProductEntity;
+import com.koliday.sap.entity.QuotationEntity;
 import com.koliday.sap.service.intf.OrderService;
 import com.koliday.sap.service.intf.ProductService;
 import org.slf4j.Logger;
@@ -42,6 +40,11 @@ public class OrderManagementController {
         return "create_inquiry";
     }
 
+    @GetMapping("/createquotation")
+    public String getCreateQuotationPage(Model model){
+        return "create_quotation";
+    }
+
 
     @PostMapping("/createInquiry")
     @ResponseBody
@@ -52,9 +55,6 @@ public class OrderManagementController {
         String inquiryItemJSON=request.getParameter("item");
         logger.info(inquiryItemJSON);
         List<InquiryItemDTO> inquiryItemDTOList=JSON.parseArray(inquiryItemJSON,InquiryItemDTO.class);
-        for(InquiryItemDTO inquiryItemDTO:inquiryItemDTOList){
-            logger.info(inquiryItemDTO.toString());
-        }
         //获取inquiry信息
         Integer clid=Integer.valueOf(request.getParameter("clid"));
         BigDecimal net_value=new BigDecimal(request.getParameter("sum_net_value"));
@@ -103,5 +103,57 @@ public class OrderManagementController {
         Integer inid=Integer.valueOf(request.getParameter("inid"));
         InquiryDetailDTO inquiryDetail = orderService.getInquiryDetail(inid);
         return JSON.toJSONString(inquiryDetail);
+    }
+
+
+    @PostMapping("/getQuotaionRefInquiry")
+    @ResponseBody
+    public String getQuotaionRefInquiry(HttpSession session){
+        UserDTO user=(UserDTO)session.getAttribute("user");
+        Integer creator=user.getUid();
+        List<InquiryDTO> allInquiryList = orderService.getQuotationRefInquiry(creator);
+        return JSON.toJSONString(allInquiryList);
+    }
+
+    @PostMapping("/createQuotation")
+    @ResponseBody
+    public String createQuotation(HttpServletRequest request,HttpSession session){
+        String inquiryItemJSON=request.getParameter("item");
+        logger.info(inquiryItemJSON);
+
+        List<QuotationItemDTO> quotationItemDTOList=JSON.parseArray(inquiryItemJSON,QuotationItemDTO.class);
+
+
+        UserDTO user=(UserDTO)session.getAttribute("user");
+        Integer creator=user.getUid();
+        Integer inid=Integer.valueOf(request.getParameter("inid"));
+        BigDecimal expectValue=new BigDecimal(request.getParameter("expectvalue"));
+        Integer discount=Integer.valueOf(request.getParameter("discount"));
+        BigDecimal netdiscount=new BigDecimal(request.getParameter("netdiscount"));
+        BigDecimal itemdiscount=new BigDecimal(request.getParameter("itemdiscount"));
+        SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy");
+        Integer quid=0;
+        try {
+            Date createdate=sdf.parse(request.getParameter("createdate"));
+            Date validfrom=sdf.parse(request.getParameter("validfrom"));
+            Date validto=sdf.parse(request.getParameter("validto"));
+            Date reqdate=sdf.parse(request.getParameter("reqdate"));
+            QuotationEntity quotation=new QuotationEntity();
+            quotation.setInid(inid);
+            quotation.setCreator(creator);
+            quotation.setCreatedate(createdate);
+            quotation.setExpectvalue(expectValue);
+            quotation.setDiscount(discount);
+            quotation.setNetdiscount(netdiscount);
+            quotation.setItemdiscount(itemdiscount);
+            quotation.setValidfrom(validfrom);
+            quotation.setValidto(validto);
+            quotation.setReqdate(reqdate);
+            quotation.setIfhaveor(0);
+            quid=orderService.createQuotation(quotation,quotationItemDTOList);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(quid);
     }
 }
