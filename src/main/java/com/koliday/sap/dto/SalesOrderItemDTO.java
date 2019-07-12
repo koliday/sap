@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class QuotationItemDTO {
+public class SalesOrderItemDTO {
 
     @JSONField(name="itemid")
     private String itemid;

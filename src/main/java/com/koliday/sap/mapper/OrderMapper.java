@@ -1,11 +1,9 @@
 package com.koliday.sap.mapper;
 
-import com.koliday.sap.dto.InquiryDTO;
-import com.koliday.sap.dto.InquiryDetailDTO;
-import com.koliday.sap.dto.InquiryItemDTO;
-import com.koliday.sap.dto.QuotationItemDTO;
+import com.koliday.sap.dto.*;
 import com.koliday.sap.entity.InquiryEntity;
 import com.koliday.sap.entity.QuotationEntity;
+import com.koliday.sap.entity.SalesOrderEntity;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -37,6 +35,28 @@ public interface OrderMapper {
 
     Integer createQuotationItem(@Param("item") QuotationItemDTO quotationItemDTO);
 
-    Integer updateInquiryStatus(@Param("quotation") QuotationEntity quotationEntity)
+    Integer updateInquiryStatus(@Param("quotation") QuotationEntity quotationEntity);
 
+    List<QuotationDTO> getAllQuotation(@Param("uid")Integer uid);
+
+    QuotationDTO getQuotation(@Param("quid")Integer quid);
+
+    List<QuotationItemDTO> getQuotationItem(@Param("quid")Integer quid);
+
+    //salesorder
+    List<QuotationDTO> getSalesOrderRefQuotation(@Param("uid") Integer uid);
+
+    Integer selectSalesOrderCount();
+
+    Integer createSalesOrder(@Param("order")SalesOrderEntity salesOrderEntity);
+
+    Integer createSalesOrderItem(@Param("quid") Integer quid,@Param("orid") Integer orid);
+
+    Integer updateQuotationStatus(@Param("quid") Integer quid);
+
+    List<SalesOrderDTO> getAllSalesOrder(@Param("uid") Integer creator);
+
+    SalesOrderDTO getSalesOrder(@Param("orid")Integer orid);
+
+    List<SalesOrderItemDTO> getSalesOrderItem(@Param("orid")Integer orid);
 }

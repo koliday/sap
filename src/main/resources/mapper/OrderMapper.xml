@@ -9,6 +9,9 @@
     <select id="selectQuotationCount" resultType="java.lang.Integer">
         select count(*) from quotation;
     </select>
+    <select id="selectSalesOrderCount" resultType="java.lang.Integer">
+        select count(*) from salesorder;
+    </select>
     <select id="selectItemCount" resultType="java.lang.Integer">
         select count(*) from item;
     </select>
@@ -63,6 +66,48 @@
         update inquiry set ifhavequo=1 where inid=#{quotation.inid};
     </update>
 
+    <select id="getAllQuotation" resultType="com.koliday.sap.dto.QuotationDTO">
+        select quid,quno,(select clname from client where clid=client) client,(select username from user where uid=creator) creator,createdate from quotation where creator=#{uid};
+    </select>
+
+    <select id="getQuotation" resultType="com.koliday.sap.dto.QuotationDTO">
+        select quid,quno,inid,(select clno from client where clid=client) client,(select username from user where uid=creator) creator,createdate,netvalue,expectvalue,discount,netdiscount,itemdiscount,validfrom,validto,reqdate from quotation where quid=#{quid};
+    </select>
+
+    <select id="getQuotationItem" resultType="com.koliday.sap.dto.QuotationItemDTO">
+        select itemid,itemno,(select pname from product where product.pid=item.pid) pname,quantity,netvalue,itemdiscount discount from item where quid=#{quid};
+    </select>
+
+    <select id="getSalesOrderRefQuotation" resultType="com.koliday.sap.dto.QuotationDTO">
+        select quid,quno,(select clname from client where clid=client) client,(select username from user where uid=creator) creator,createdate from quotation where creator=#{uid} and ifhaveor=0;
+    </select>
+
+    <insert id="createSalesOrder" useGeneratedKeys="true" keyProperty="orid" parameterType="com.koliday.sap.entity.QuotationEntity">
+        insert into salesorder values(null,#{order.orno},#{order.quid},(select client from quotation where quotation.quid= #{order.quid}),#{order.creator},#{order.createdate},(select quotation.expectvalue from quotation where quotation.quid= #{order.quid}),#{order.validfrom},#{order.validto},#{order.reqdate},#{order.ifinvoice},#{order.ifhavedlv});
+    </insert>
+
+    <update id="updateQuotationStatus" parameterType="java.lang.Integer">
+        update quotation set ifhaveor=1 where quid=#{quid};
+    </update>
+
+    <update id="createSalesOrderItem" parameterType="java.lang.Integer">
+        update item set orid=#{orid} where quid=#{quid};
+    </update>
+
+    <select id="getAllSalesOrder" resultType="com.koliday.sap.dto.SalesOrderDTO">
+        select orid,orno,(select clname from client where clid=client) client,(select username from user where uid=creator) creator,createdate from salesorder where creator=#{uid};
+    </select>
+
+    <select id="getSalesOrder" resultType="com.koliday.sap.dto.SalesOrderDTO">
+        select orid,orno,quid,(select clno from client where clid=client) client,(select username from user where uid=creator) creator,createdate,netvalue,(select discount from quotation where quotation.quid=salesorder.quid) discount,(select netdiscount from quotation where quotation.quid=salesorder.quid) netdiscount,(select itemdiscount from quotation where quotation.quid=salesorder.quid) itemdiscount,validfrom,validto,reqdate from salesorder where orid=#{orid};
+    </select>
+
+    <select id="getSalesOrderItem" resultType="com.koliday.sap.dto.SalesOrderItemDTO">
+        select itemid,itemno,(select pname from product where product.pid=item.pid) pname,quantity,netvalue,itemdiscount discount from item where orid=#{orid};
+    </select>
+    
+    
+    
 </mapper>
 
 

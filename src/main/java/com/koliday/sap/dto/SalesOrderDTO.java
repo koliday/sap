@@ -8,15 +8,14 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class QuotationDTO {
+public class SalesOrderDTO {
+    private Integer orid;
+    private String orno;
     private Integer quid;
-    private String quno;
-    private Integer inid;
     private String client;
     private String creator;
     private Date createdate;
     private BigDecimal netvalue;
-    private BigDecimal expectvalue;
     private Integer discount;
     private BigDecimal netdiscount;
     private BigDecimal itemdiscount;

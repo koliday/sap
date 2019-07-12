@@ -1,11 +1,9 @@
 package com.koliday.sap.service.impl;
 
-import com.koliday.sap.dto.InquiryDTO;
-import com.koliday.sap.dto.InquiryDetailDTO;
-import com.koliday.sap.dto.InquiryItemDTO;
-import com.koliday.sap.dto.QuotationItemDTO;
+import com.koliday.sap.dto.*;
 import com.koliday.sap.entity.InquiryEntity;
 import com.koliday.sap.entity.QuotationEntity;
+import com.koliday.sap.entity.SalesOrderEntity;
 import com.koliday.sap.mapper.OrderMapper;
 import com.koliday.sap.service.intf.OrderService;
 import com.koliday.sap.utils.IdConvertToNoUtil;
@@ -114,5 +112,69 @@ public class OrderServiceImpl implements OrderService {
             result+=orderMapper.createQuotationItem(quotationItemDTO);
         }
         return result;
+    }
+
+    @Override
+    public List<QuotationDTO> getAllQuotation(Integer creator) {
+        return orderMapper.getAllQuotation(creator);
+    }
+
+    @Override
+    public QuotationDetailDTO getQuotationDetail(Integer quid) {
+        QuotationDTO quotationDTO=orderMapper.getQuotation(quid);
+        List<QuotationItemDTO> quotationItemDTOList=orderMapper.getQuotationItem(quid);
+        QuotationDetailDTO quotationDetailDTO=new QuotationDetailDTO();
+        quotationDetailDTO.setQuotationDTO(quotationDTO);
+        quotationDetailDTO.setQuotationItemDTOList(quotationItemDTOList);
+        return quotationDetailDTO;
+    }
+
+    @Override
+    public List<QuotationDTO> getSalesOrderRefQuotation(Integer creator) {
+        return orderMapper.getSalesOrderRefQuotation(creator);
+    }
+
+    @Transactional
+    @Override
+    public Integer createSalesOrder(SalesOrderEntity salesOrder) {
+        Integer salesOrderCount=orderMapper.selectSalesOrderCount();
+        String orno= IdConvertToNoUtil.convertSalesOrder(salesOrderCount+1);
+        salesOrder.setOrno(orno);
+        Integer salesOrderResult=orderMapper.createSalesOrder(salesOrder);
+        if(salesOrderResult<1)
+            return 0;
+        Integer orid=salesOrder.getOrid();
+
+        Integer inquiryItemResult=createSalesOrderItem(salesOrder.getQuid(),orid);
+        if(inquiryItemResult<1)
+            return 0;
+        Integer updateinquirystatus=updateQuotationStatus(salesOrder.getQuid());
+        if(updateinquirystatus<1)
+            return 0;
+        return orid;
+    }
+
+
+    private Integer createSalesOrderItem(Integer quid,Integer orid){
+        return orderMapper.createSalesOrderItem(quid,orid);
+    }
+
+    private Integer updateQuotationStatus(Integer quid){
+        return orderMapper.updateQuotationStatus(quid);
+    }
+
+    @Override
+    public List<SalesOrderDTO> getAllSalesOrder(Integer creator) {
+        return orderMapper.getAllSalesOrder(creator);
+    }
+
+    @Override
+    public SalesOrderDetailDTO getSalesOrderDetail(Integer orid) {
+        SalesOrderDTO salesOrderDTO=orderMapper.getSalesOrder(orid);
+        List<SalesOrderItemDTO> salesOrderItemDTOList=orderMapper.getSalesOrderItem(orid);
+        SalesOrderDetailDTO salesOrderDetailDTO=new SalesOrderDetailDTO();
+        salesOrderDetailDTO.setSalesOrderDTO(salesOrderDTO);
+        salesOrderDetailDTO.setSalesOrderItemDTOList(salesOrderItemDTOList);
+        return salesOrderDetailDTO;
     }
 }

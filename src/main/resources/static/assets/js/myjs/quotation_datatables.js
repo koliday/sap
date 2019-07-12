@@ -43,6 +43,12 @@ var KTDatatableData = function() {
                     textAlign: 'center',
                     overflow: 'visible',
                     autoHide: false,
+                },{
+                    field: 'itemno',
+                    title: 'Item No.',
+                    textAlign: 'center',
+                    overflow: 'visible',
+                    autoHide: false,
                 }, {
                     field: 'pname',
                     title: 'Product',
@@ -62,13 +68,6 @@ var KTDatatableData = function() {
                     overflow: 'visible',
                     autoHide: false,
                     template:'${{net_value}}'
-                },{
-                    field: 'prob',
-                    title: 'Probability',
-                    textAlign: 'center',
-                    overflow: 'visible',
-                    autoHide: false,
-                    template:'{{prob}}%'
                 },{
                     field: 'discount',
                     title: 'Discount',
@@ -276,7 +275,7 @@ jQuery(document).ready(function() {
                     $("#success_text").text("Inquiry No. "+quno+" has been created !");
                     $("#success_alert").slideDown();
                 }else{
-                    $("#fail_text").text("Error when quotation!Please retry!");
+                    $("#fail_text").text("Error when creating quotation!Please retry!");
                     $("#fail_alert").slideDown();
                     $("input").removeAttr("disabled");
                     $("select").removeAttr("disabled");

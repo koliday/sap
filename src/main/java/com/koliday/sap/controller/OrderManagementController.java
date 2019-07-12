@@ -5,6 +5,7 @@ import com.koliday.sap.dto.*;
 import com.koliday.sap.entity.InquiryEntity;
 import com.koliday.sap.entity.ProductEntity;
 import com.koliday.sap.entity.QuotationEntity;
+import com.koliday.sap.entity.SalesOrderEntity;
 import com.koliday.sap.service.intf.OrderService;
 import com.koliday.sap.service.intf.ProductService;
 import org.slf4j.Logger;
@@ -155,5 +156,92 @@ public class OrderManagementController {
             e.printStackTrace();
         }
         return JSON.toJSONString(quid);
+    }
+
+    @PostMapping("/getAllQuotation")
+    @ResponseBody
+    public String getAllQuotation(HttpSession session){
+        UserDTO user=(UserDTO)session.getAttribute("user");
+        Integer creator=user.getUid();
+        List<QuotationDTO> allQuotation = orderService.getAllQuotation(creator);
+        return JSON.toJSONString(allQuotation);
+    }
+
+    @PostMapping("/getQuotation")
+    @ResponseBody
+    public String getQuotation(HttpServletRequest request){
+        Integer quid=Integer.valueOf(request.getParameter("quid"));
+        QuotationDetailDTO quotationDetailDTO=orderService.getQuotationDetail(quid);
+        return JSON.toJSONString(quotationDetailDTO);
+    }
+
+    @GetMapping("/displayquotation")
+    public String displayQuotation(){
+        return "display_quotation";
+    }
+
+    @PostMapping("/getSalesOrderRefQuotation")
+    @ResponseBody
+    public String getSalesOrderRefQuotation(HttpSession session){
+        UserDTO user=(UserDTO)session.getAttribute("user");
+        Integer creator=user.getUid();
+        List<QuotationDTO> salesOrderRefList = orderService.getSalesOrderRefQuotation(creator);
+        return JSON.toJSONString(salesOrderRefList);
+    }
+
+    @GetMapping("/createsalesorder")
+    public String createSalesOrder(){
+        return "create_salesorder";
+    }
+
+    @PostMapping("/createSalesOrder")
+    @ResponseBody
+    public String createSalesOrder(HttpServletRequest request,HttpSession session){
+        UserDTO user=(UserDTO)session.getAttribute("user");
+        Integer creator=user.getUid();
+        Integer quid=Integer.valueOf(request.getParameter("quid"));
+        SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy");
+        Integer orid=0;
+        try {
+            Date createdate=sdf.parse(request.getParameter("createdate"));
+            Date validfrom=sdf.parse(request.getParameter("validfrom"));
+            Date validto=sdf.parse(request.getParameter("validto"));
+            Date reqdate=sdf.parse(request.getParameter("reqdate"));
+            SalesOrderEntity salesOrderEntity=new SalesOrderEntity();
+            salesOrderEntity.setQuid(quid);
+            salesOrderEntity.setCreator(creator);
+            salesOrderEntity.setCreatedate(createdate);
+            salesOrderEntity.setValidfrom(validfrom);
+            salesOrderEntity.setValidto(validto);
+            salesOrderEntity.setReqdate(reqdate);
+            salesOrderEntity.setIfinvoice(0);
+            salesOrderEntity.setIfhavedlv(0);
+            orid=orderService.createSalesOrder(salesOrderEntity);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(orid);
+    }
+
+    @PostMapping("/getSalesOrder")
+    @ResponseBody
+    public String getSalesOrder(HttpServletRequest request){
+        Integer orid=Integer.valueOf(request.getParameter("orid"));
+        SalesOrderDetailDTO salesOrderDetailDTO=orderService.getSalesOrderDetail(orid);
+        logger.info(JSON.toJSONString(salesOrderDetailDTO));
+        return JSON.toJSONString(salesOrderDetailDTO);
+    }
+    @GetMapping("/displaysalesorder")
+    public String displaySalesOrder(){
+        return "display_salesorder";
+    }
+
+    @PostMapping("/getAllSalesOrder")
+    @ResponseBody
+    public String getAllSalesOrder(HttpSession session){
+        UserDTO user=(UserDTO)session.getAttribute("user");
+        Integer creator=user.getUid();
+        List<SalesOrderDTO> allSalesOrder = orderService.getAllSalesOrder(creator);
+        return JSON.toJSONString(allSalesOrder);
     }
 }

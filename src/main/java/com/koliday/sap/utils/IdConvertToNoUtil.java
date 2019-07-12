@@ -35,4 +35,13 @@ public class IdConvertToNoUtil {
         }
         return result+=quidString;
     }
+
+    public static String convertSalesOrder(int orid) {
+        String oridString=String.valueOf(orid);
+        String result="OR";
+        for(int i=0;i<6-oridString.length();i++){
+            result+="0";
+        }
+        return result+=oridString;
+    }
 }
