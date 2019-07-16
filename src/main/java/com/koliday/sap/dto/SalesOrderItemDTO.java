@@ -12,6 +12,8 @@ public class SalesOrderItemDTO {
 
     @JSONField(name="itemid")
     private String itemid;
+    @JSONField(name="item_id")
+    private String item_id;
     private String itemno;
     private String pname;
     private Integer quantity;

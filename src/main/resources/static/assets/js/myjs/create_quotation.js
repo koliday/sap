@@ -46,6 +46,18 @@ var KTBootstrapDatepicker = function () {
             orientation: "top left",
             templates: arrows
         });
+        $('#del_date').datepicker({
+            rtl: KTUtil.isRTL(),
+            todayHighlight: true,
+            orientation: "top left",
+            templates: arrows
+        });
+        $('#picking_date').datepicker({
+            rtl: KTUtil.isRTL(),
+            todayHighlight: true,
+            orientation: "top left",
+            templates: arrows
+        });
 
     }
 

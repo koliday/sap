@@ -32,5 +32,7 @@ public interface OrderService {
 
     List<SalesOrderDTO> getAllSalesOrder(Integer creator);
 
+    List<SalesOrderDTO> getDeliveryRef(Integer creator);
+
     SalesOrderDetailDTO getSalesOrderDetail(Integer orid);
 }

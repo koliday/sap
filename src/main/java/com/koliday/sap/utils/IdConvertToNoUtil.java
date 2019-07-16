@@ -44,4 +44,13 @@ public class IdConvertToNoUtil {
         }
         return result+=oridString;
     }
+
+    public static String convertDelivery(int deid) {
+        String deidString=String.valueOf(deid);
+        String result="DE";
+        for(int i=0;i<6-deidString.length();i++){
+            result+="0";
+        }
+        return result+=deidString;
+    }
 }

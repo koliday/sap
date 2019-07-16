@@ -22,4 +22,5 @@ public class SalesOrderDTO {
     private Date validfrom;
     private Date validto;
     private Date reqdate;
+    private String destination;
 }

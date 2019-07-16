@@ -123,7 +123,7 @@ public class OrderManagementController {
         logger.info(inquiryItemJSON);
 
         List<QuotationItemDTO> quotationItemDTOList=JSON.parseArray(inquiryItemJSON,QuotationItemDTO.class);
-
+        logger.info(quotationItemDTOList.get(0).getItemid());
 
         UserDTO user=(UserDTO)session.getAttribute("user");
         Integer creator=user.getUid();

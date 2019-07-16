@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koliday.sap.mapper.DeliveryMapper">
+
+
+    <select id="selectDeliveryCount" resultType="java.lang.Integer">
+        select count(*) from delivery;
+    </select>
+    
+
+    <insert id="createDelivery" useGeneratedKeys="true" keyProperty="deid" parameterType="com.koliday.sap.entity.DeliveryEntity">
+        insert into delivery values(null,#{del.deno},#{del.orid},(select client from salesorder where orid=#{del.orid}),#{del.creator},#{del.createdate},#{del.destination},#{del.deldate},#{del.pickdate},#{del.pickstatus},#{del.poststatus});
+    </insert>
+
+    <select id="getWarehouse" resultType="com.koliday.sap.entity.WarehouseEntity">
+        select whid,whno,concat(whname,",",(select plname from plant where plant.plid= warehouse.plid)) whname,whaddress from warehouse;
+    </select>
+
+    <update id="createDeliveryItem" parameterType="com.koliday.sap.dto.DeliveryItemDTO">
+        update item set pickstatus=1,pickdate=(select pickdate from delivery where deid=#{item.deid}),pickquantity=quantity,whid=#{item.whid},deid=#{item.deid} where itemid=#{item.itemid};
+    </update>
+
+    <update id="updateOrderStatus" parameterType="java.lang.Integer">
+        update salesorder set ifhavedlv=1 where orid=#{orid};
+    </update>
+
+
+    <select id="getUnpostedDelivery" resultType="com.koliday.sap.dto.DeliveryDTO">
+         select deid,deno,orid,(select clname from client where clid=delivery.clid) client,(select username from user where uid=creator) creator,createdate from delivery where creator=#{creator} and poststatus=0;
+    </select>
+
+    <update id="postDelivery" parameterType="java.lang.Integer">
+        update delivery set poststatus=1 where deid=#{deid};
+    </update>
+
+    <select id="getAllDelivery" resultType="com.koliday.sap.dto.DeliveryDTO">
+        select deid,deno,orid,(select clname from client where clid=delivery.clid) client,(select username from user where uid=creator) creator,createdate from delivery where creator=#{creator};
+    </select>
+
+    <select id="displayDelivery" resultType="com.koliday.sap.dto.DeliveryDTO">
+        select deid,deno,orid,(select clname from client where client.clid=delivery.clid) client,(select username from user where uid=creator) creator,createdate,destination,deldate,pickdate,pickstatus,poststatus from delivery where deid=#{deid};
+    </select>
+
+    <select id="displayDeliveryItem" resultType="com.koliday.sap.dto.DeliveryItemDTO">
+        select itemid,itemno,(select pname from product where pid=item.pid) pname,quantity,deid,(select plname from plant where plid=(select plid from warehouse where whid=item.whid)) plant,(select whname from warehouse where whid=item.whid) warehouse from item where deid=#{deid};
+    </select>
+</mapper>
+
+

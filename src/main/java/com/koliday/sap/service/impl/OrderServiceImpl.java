@@ -144,7 +144,6 @@ public class OrderServiceImpl implements OrderService {
         if(salesOrderResult<1)
             return 0;
         Integer orid=salesOrder.getOrid();
-
         Integer inquiryItemResult=createSalesOrderItem(salesOrder.getQuid(),orid);
         if(inquiryItemResult<1)
             return 0;
@@ -176,5 +175,10 @@ public class OrderServiceImpl implements OrderService {
         salesOrderDetailDTO.setSalesOrderDTO(salesOrderDTO);
         salesOrderDetailDTO.setSalesOrderItemDTOList(salesOrderItemDTOList);
         return salesOrderDetailDTO;
+    }
+
+    @Override
+    public List<SalesOrderDTO> getDeliveryRef(Integer creator) {
+        return orderMapper.getDeliveryRef(creator);
     }
 }

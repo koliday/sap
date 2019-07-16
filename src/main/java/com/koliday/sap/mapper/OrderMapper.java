@@ -56,6 +56,8 @@ public interface OrderMapper {
 
     List<SalesOrderDTO> getAllSalesOrder(@Param("uid") Integer creator);
 
+    List<SalesOrderDTO> getDeliveryRef(@Param("uid") Integer creator);
+
     SalesOrderDTO getSalesOrder(@Param("orid")Integer orid);
 
     List<SalesOrderItemDTO> getSalesOrderItem(@Param("orid")Integer orid);
