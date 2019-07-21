@@ -16,10 +16,13 @@ public class SalesOrderItemDTO {
     private String item_id;
     private String itemno;
     private String pname;
+    private String pno;
+    private BigDecimal price;
     private Integer quantity;
     private BigDecimal netvalue;
     @JSONField(name="discount")
     private BigDecimal discount;
+    private BigDecimal orderdiscount;
     private Integer quid;
-
+    private BigDecimal finalvalue;
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koliday.sap.mapper.InvoiceMapper">
+
+    <select id="selectInvoiceCount" resultType="java.lang.Integer">
+        select count(*) from invoice;
+    </select>
+
+    <insert id="createInvoice" useGeneratedKeys="true" keyProperty="ivid" parameterType="com.koliday.sap.entity.InvoiceEntity">
+        insert into invoice values (null,#{invoice.ivno},#{invoice.orid},(select client from salesorder where orid=#{invoice.orid}),#{invoice.billingdate},#{invoice.creator},#{invoice.createdate});
+    </insert>
+
+    <update id="updateOrder" parameterType="com.koliday.sap.entity.InvoiceEntity">
+      update salesorder set ifinvoice=1 where orid=#{invoice.orid};
+    </update>
+
+    <select id="displayInvoice" resultType="com.koliday.sap.dto.InvoiceDTO">
+      select ivid,ivno,orid, (select orno from salesorder where orid=invoice.orid) orno,(select clno from client where clid=invoice.payer) payer,billingdate,(select username from user where uid=creator) creator,createdate,(select netvalue from salesorder where orid=invoice.orid) netvalue from invoice where ivid=#{ivid};
+    </select>
+
+    <select id="getAllInvoice" resultType="com.koliday.sap.dto.InvoiceDTO">
+      select ivid,ivno,(select orno from salesorder where orid=invoice.orid) orno,(select clno from client where clid=invoice.payer) payer,billingdate,(select username from user where uid=creator) creator,createdate from invoice where creator=#{creator};
+    </select>
+
+    <select id="previewInvoice" resultType="com.koliday.sap.dto.InvoicePreviewDTO">
+      select ivid,ivno,
+      (select username from user where uid=creator) creator,createdate,
+      (select clno from client where clid=invoice.payer) clno,
+      (select clname from client where clid=invoice.payer) clname,
+      (select netvalue from salesorder where orid=invoice.orid) netvalue,
+      billingdate,
+      (select inno from inquiry where inid=(select distinct inid from item where orid=invoice.orid)) inno,
+      (select inquiry.createdate from inquiry where inid=(select distinct inid from item where orid=invoice.orid)) indate,
+      (select quno from quotation where quid=(select distinct quid from item where orid=invoice.orid)) quno,
+      (select quotation.createdate from quotation where quid=(select distinct quid from item where orid=invoice.orid)) qudate,
+      orid,
+       (select orno from salesorder where orid=invoice.orid) orno,
+       (select salesorder.createdate from salesorder where orid=invoice.orid) ordate,
+       (select deno from delivery where deid=(select distinct deid from item where orid=invoice.orid)) deno,
+      (select delivery.createdate from delivery where deid=(select distinct deid from item where orid=invoice.orid)) dedate
+        from invoice where ivid=#{ivid};
+    </select>
+
+
+
+
+</mapper>

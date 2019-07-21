@@ -53,4 +53,12 @@ public class IdConvertToNoUtil {
         }
         return result+=deidString;
     }
+    public static String convertInvoice(int ivid) {
+        String ividString=String.valueOf(ivid);
+        String result="IV";
+        for(int i=0;i<6-ividString.length();i++){
+            result+="0";
+        }
+        return result+=ividString;
+    }
 }

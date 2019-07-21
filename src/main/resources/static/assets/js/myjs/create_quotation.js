@@ -58,6 +58,12 @@ var KTBootstrapDatepicker = function () {
             orientation: "top left",
             templates: arrows
         });
+        $('#billing_date').datepicker({
+            rtl: KTUtil.isRTL(),
+            todayHighlight: true,
+            orientation: "top left",
+            templates: arrows
+        });
 
     }
 

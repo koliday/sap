@@ -181,4 +181,9 @@ public class OrderServiceImpl implements OrderService {
     public List<SalesOrderDTO> getDeliveryRef(Integer creator) {
         return orderMapper.getDeliveryRef(creator);
     }
+
+    @Override
+    public List<SalesOrderDTO> getUninvoicedOrder(Integer creator) {
+        return orderMapper.getUninvoicedOrder(creator);
+    }
 }

@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -56,7 +59,7 @@ public class ClientManagementController {
     }
     @PostMapping("/createclient")
     @ResponseBody
-    public String createClient(HttpServletRequest request, HttpSession session){
+    public String createClient(HttpServletRequest request, HttpSession session) throws ParseException {
 
         UserDTO user=(UserDTO)session.getAttribute("user");
         //封装client
@@ -66,7 +69,8 @@ public class ClientManagementController {
         Integer city= Integer.valueOf(request.getParameter("city"));
         String postcode= request.getParameter("postcode");
         Integer creator=user.getUid();
-        Long createtime=System.currentTimeMillis();
+        SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy");
+        Date createtime=sdf.parse(sdf.format(new Date()));
         ClientEntity client=new ClientEntity();
         client.setClname(clname);
         client.setClcontact(contact);
@@ -112,7 +116,7 @@ public class ClientManagementController {
 
     @PostMapping("/createcontactperson")
     @ResponseBody
-    public String createContactPersonByClid(HttpSession session,HttpServletRequest request){
+    public String createContactPersonByClid(HttpSession session,HttpServletRequest request) throws ParseException {
         UserDTO user=(UserDTO)session.getAttribute("user");
         //封装cp
         Integer clid=Integer.valueOf(request.getParameter("clid"));
@@ -124,7 +128,8 @@ public class ClientManagementController {
         Integer vip= Integer.valueOf(request.getParameter("vip")) ;
         Integer callfreq= Integer.valueOf(request.getParameter("callfreq")) ;
         Integer creator=user.getUid();
-        Long createtime=System.currentTimeMillis();
+        SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy");
+        Date createtime=sdf.parse(sdf.format(new Date()));
         ContactPersonEntity contactPerson=new ContactPersonEntity();
         contactPerson.setClid(clid);
         contactPerson.setCpname(cpname);

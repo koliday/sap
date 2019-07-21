@@ -143,13 +143,50 @@ jQuery(document).ready(function() {
         var netvalue=parseInt(selectedrow.children("td:eq(3)").text().substring(1));
         $("#add_discount_modal").modal('show');
         //初始化slider范围
-        itemslider.noUiSlider.updateOptions({
-            range: {
-                'min': 0,
-                'max': netvalue
-            }
-        });
+        // itemslider.noUiSlider.updateOptions({
+        //     range: {
+        //         'min': 0,
+        //         'max': netvalue
+        //     }
+        // });
+        var ItemDiscountSlider = function() {
+            var item = function() {
+                // init slider
+                itemslider = document.getElementById('item_discount_slider');
+                noUiSlider.create(itemslider, {
+                    start: [ 0 ],
+                    connect: [true, false],
+                    step: 1,
+                    range: {
+                        'min': 0 ,
+                        'max': netvalue
+                    },
+                    format: wNumb({
+                        decimals: 0,
+                        prefix: '$',
+                    })
+                });
 
+
+                // init slider input
+                var itemsliderInput = document.getElementById('item_discount');
+
+                itemslider.noUiSlider.on('update', function( values, handle ) {
+                    itemsliderInput.value = values[handle];
+                });
+
+                itemsliderInput.addEventListener('change', function(){
+                    itemslider.noUiSlider.set(this.value);
+                });
+            }
+            return {
+                // public functions
+                init: function() {
+                    item();
+                }
+            };
+        }();
+        ItemDiscountSlider.init();
     });
 
     function updateagg() {
@@ -342,44 +379,44 @@ jQuery(document).ready(function() {
     }();
     KTnoUiSliderDemos.init();
 
-    var ItemDiscountSlider = function() {
-        var item = function() {
-            // init slider
-            itemslider = document.getElementById('item_discount_slider');
-            noUiSlider.create(itemslider, {
-                start: [ 0 ],
-                connect: [true, false],
-                step: 1,
-                range: {
-                    'min': 0 ,
-                    'max': 100
-                },
-                format: wNumb({
-                    decimals: 0,
-                    prefix: '$',
-                })
-            });
-
-
-            // init slider input
-            var itemsliderInput = document.getElementById('item_discount');
-
-            itemslider.noUiSlider.on('update', function( values, handle ) {
-                itemsliderInput.value = values[handle];
-            });
-
-            itemsliderInput.addEventListener('change', function(){
-                itemslider.noUiSlider.set(this.value);
-            });
-        }
-        return {
-            // public functions
-            init: function() {
-                item();
-            }
-        };
-    }();
-    ItemDiscountSlider.init();
+    // var ItemDiscountSlider = function() {
+    //     var item = function() {
+    //         // init slider
+    //         itemslider = document.getElementById('item_discount_slider');
+    //         noUiSlider.create(itemslider, {
+    //             start: [ 0 ],
+    //             connect: [true, false],
+    //             step: 1,
+    //             range: {
+    //                 'min': 0 ,
+    //                 'max': 100
+    //             },
+    //             format: wNumb({
+    //                 decimals: 0,
+    //                 prefix: '$',
+    //             })
+    //         });
+    //
+    //
+    //         // init slider input
+    //         var itemsliderInput = document.getElementById('item_discount');
+    //
+    //         itemslider.noUiSlider.on('update', function( values, handle ) {
+    //             itemsliderInput.value = values[handle];
+    //         });
+    //
+    //         itemsliderInput.addEventListener('change', function(){
+    //             itemslider.noUiSlider.set(this.value);
+    //         });
+    //     }
+    //     return {
+    //         // public functions
+    //         init: function() {
+    //             item();
+    //         }
+    //     };
+    // }();
+    // ItemDiscountSlider.init();
 });
 
 

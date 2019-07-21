@@ -101,12 +101,16 @@
         select orid,orno,(select clname from client where clid=client) client,(select username from user where uid=creator) creator,createdate from salesorder where creator=#{uid} and ifhavedlv=0;
     </select>
 
+    <select id="getUninvoicedOrder" resultType="com.koliday.sap.dto.SalesOrderDTO">
+        select orid,orno,(select clname from client where clid=client) client,(select username from user where uid=creator) creator,createdate from salesorder where creator=#{uid} and ifinvoice=0 and ifhavedlv=1;
+    </select>
+
     <select id="getSalesOrder" resultType="com.koliday.sap.dto.SalesOrderDTO">
         select orid,orno,quid,(select clno from client where clid=client) client,(select username from user where uid=creator) creator,createdate,netvalue,(select discount from quotation where quotation.quid=salesorder.quid) discount,(select netdiscount from quotation where quotation.quid=salesorder.quid) netdiscount,(select itemdiscount from quotation where quotation.quid=salesorder.quid) itemdiscount,validfrom,validto,reqdate,(select claddress from client where clid=client) destination from salesorder where orid=#{orid};
     </select>
 
     <select id="getSalesOrderItem" resultType="com.koliday.sap.dto.SalesOrderItemDTO">
-        select itemid,itemno,(select pname from product where product.pid=item.pid) pname,quantity,netvalue,itemdiscount discount from item where orid=#{orid};
+        select itemid,itemno,(select pname from product where product.pid=item.pid) pname,(select pno from product where product.pid=item.pid) pno,(select price from product where product.pid=item.pid) price,quantity,netvalue,itemdiscount discount,(select discount from quotation where quid=item.quid) orderdiscount from item where orid=#{orid};
     </select>
     
     

@@ -3,6 +3,8 @@ package com.koliday.sap.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 public class ContactPersonEntity {
@@ -16,6 +18,6 @@ public class ContactPersonEntity {
     private Integer vip;
     private Integer callfreq;
     private Integer creator;
-    private Long createtime;
+    private Date createtime;
     private Integer status;
 }

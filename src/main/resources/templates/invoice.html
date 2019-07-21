@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<!--@author Koliday-->
+<!--@date 2019/7/18-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice Preview</title>
+    <script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+    <script src="https://cdn.bootcss.com/jspdf/1.5.3/jspdf.min.js"></script>
+    <!--<link href="../static/assets/css/demo11/style.bundle.css" rel="stylesheet" type="text/css"/>-->
+    <link th:href="@{/assets/css/demo11/style.bundle.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/css/demo1/pages/general/invoices/invoice-2.css}" rel="stylesheet" type="text/css"/>
+    <!--<link href="../static/assets/css/demo1/pages/general/invoices/invoice-2.css" rel="stylesheet" type="text/css"/>-->
+</head>
+<body>
+<div id="invoice">
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="invoice_content" style="width: 80%;margin-left: 10%">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__body kt-portlet__body--fit">
+                        <div class="kt-invoice-2">
+                            <div class="kt-invoice__wrapper">
+                                <div class="kt-invoice__head">
+                                    <div class="kt-invoice__container kt-invoice__container--centered">
+                                        <div class="kt-invoice__logo">
+                                            <a>
+                                                <h1>INVOICE</h1>
+                                            </a>
+                                            <a >
+                                                <img th:src="@{/img/invoice.png}" width="200px" height="80px">
+                                            </a>
+                                        </div>
+                                        <span class="kt-invoice__desc">
+																<span>Floor 20,Rongke Mansion,Shanghai.</span>
+																<span>Funiture(China)Co.Ltd</span>
+															</span>
+                                        <div class="kt-invoice__items">
+                                            <div class="kt-invoice__item">
+                                                <span class="kt-invoice__subtitle">INVOICE NO.</span>
+                                                <span class="kt-invoice__text" th:text="${invoice.getInv().getIvno()}"></span>
+                                            </div>
+                                            <div class="kt-invoice__item">
+                                                <span class="kt-invoice__subtitle">INVOICE TO.</span>
+                                                <span class="kt-invoice__text" th:text="${invoice.getInv().getClname()+'('+invoice.getInv().getClno()+')'}"></span>
+                                            </div>
+                                            <div class="kt-invoice__item">
+                                                <span class="kt-invoice__subtitle">INVOICE Amount.</span>
+                                                <span class="kt-invoice__text" th:text="${'$'+invoice.getInv().getNetvalue()}"></span>
+                                            </div>
+                                            <div class="kt-invoice__item">
+                                                <span class="kt-invoice__subtitle">Billing Date</span>
+                                                <span class="kt-invoice__text" th:text="${invoice.getInv().getBillingdate()}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="kt-invoice__body kt-invoice__body--centered">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Refrence Doc.</th>
+                                                <th>No.</th>
+                                                <th>Date</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Inquiry</td>
+                                                <td id="inno" th:text="${invoice.getInv().getInno()}"></td>
+                                                <td id="in_createdate" th:text="${invoice.getInv().getIndate()}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Quotation</td>
+                                                <td id="quno" th:text="${invoice.getInv().getQuno()}"></td>
+                                                <td id="qu_createdate" th:text="${invoice.getInv().getQudate()}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Sales Order</td>
+                                                <td id="orno" th:text="${invoice.getInv().getOrno()}"></td>
+                                                <td id="or_createdate" th:text="${invoice.getInv().getOrdate()}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Delivery</td>
+                                                <td id="deno" th:text="${invoice.getInv().getDeno()}"></td>
+                                                <td id="de_createdate" th:text="${invoice.getInv().getDedate()}"></td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="kt-invoice__body kt-invoice__body--centered">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>Discount from item</th>
+                                                <th>Discount from net</th>
+                                                <th>Value</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="item,itemstatus : ${invoice.getItemlist()}">
+                                                <td th:text="${item.getPname()+'('+item.getPno()+')'}"></td>
+                                                <td th:text="${'$'+item.getPrice()}"></td>
+                                                <td th:text="${item.getQuantity()}"></td>
+                                                <td th:text="${'$'+item.getDiscount()}"></td>
+                                                <td th:text="${item.getOrderdiscount()+'%'}"></td>
+                                                <td th:text="${'$'+item.getFinalvalue()}" class="kt-font-danger"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="kt-invoice__footer">
+                                    <div class="kt-invoice__table  kt-invoice__table--centered table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>CREATOR</th>
+                                                <th>CREATE DATE</th>
+                                                <th>TOTAL AMOUNT</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td th:text="${invoice.getInv().getCreator()}"></td>
+                                                <td th:text="${invoice.getInv().getCreatedate()}"></td>
+                                                <td th:text="${'$'+invoice.getInv().getNetvalue()}" class="kt-font-danger"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("body").append('<div id="pdf1"></div>');
+    /*设置新元素样式*/
+    $("#pdf1").css({
+        "background-color": "#fff",
+        "position": "absolute",
+        "top": "0px",
+        "z-index": "-1",
+        "height": $("#pdf").height()
+    });
+    /*html2canvas生成图片，jspdf生成PDF文件*/
+    html2canvas($("#pdf1"), {
+        background: "#fff",
+        allowTaint: true,
+        taintTest: false,
+        onrendered:function(canvas) {
+            var contentWidth = canvas.width;
+            var contentHeight = canvas.height;
+            var pageHeight = contentWidth / 592.28 * 841.89;
+            var leftHeight = contentHeight;
+            var position = 0;
+            var imgWidth = 595.28;
+            var imgHeight = 592.28/contentWidth * contentHeight;
+            var pageData = canvas.toDataURL('image/jpeg', 1.0);
+            var img = new Image();
+            img.src = pageData;
+            var pdf = new jsPDF('p', 'pt', 'a4');
+            img.onload = function() {
+                if (leftHeight < pageHeight) {
+                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                } else {
+                    while(leftHeight > 0) {
+                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                        leftHeight -= pageHeight;
+                        position -= 841.89;
+                        if(leftHeight > 0) {
+                            pdf.addPage();
+                        }
+                    }
+                }
+                pdf.save('report_pdf_' + new Date().getTime() + '.pdf');
+                $("#pdf1").remove();
+            }
+        },
+    })
+</script>
+</body>
+</html>

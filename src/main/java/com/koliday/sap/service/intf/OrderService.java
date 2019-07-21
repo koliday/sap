@@ -35,4 +35,6 @@ public interface OrderService {
     List<SalesOrderDTO> getDeliveryRef(Integer creator);
 
     SalesOrderDetailDTO getSalesOrderDetail(Integer orid);
+
+    List<SalesOrderDTO> getUninvoicedOrder(Integer creator);
 }

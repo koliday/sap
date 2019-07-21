@@ -16,6 +16,6 @@ public class ClientEntity {
     private Integer city;
     private String postcode;
     private Integer creator;
-    private Long createtime;
+    private Date createtime;
     private Integer status;
 }

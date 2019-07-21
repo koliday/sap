@@ -4,6 +4,8 @@ import com.koliday.sap.entity.ClientEntity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 public class ClientDTO {
@@ -16,7 +18,7 @@ public class ClientDTO {
     private Integer city;
     private String postcode;
     private String creator;
-    private Long createtime;
+    private Date createtime;
     private Integer status;
 
     public ClientDTO(ClientEntity clientEntity,String creator) {
