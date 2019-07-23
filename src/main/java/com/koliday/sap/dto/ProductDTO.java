@@ -10,8 +10,9 @@ import java.math.BigDecimal;
 public class ProductDTO {
     private Integer pid;
     private String pno;
+    private String pcategory;
     private String pname;
     private BigDecimal price;
     private BigDecimal cost;
-    private BigDecimal weight;
+    private Integer totalsale;
 }

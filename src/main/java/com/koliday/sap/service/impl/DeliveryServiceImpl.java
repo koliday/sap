@@ -1,11 +1,13 @@
 package com.koliday.sap.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.koliday.sap.dto.DeliveryDTO;
 import com.koliday.sap.dto.DeliveryDetailDTO;
 import com.koliday.sap.dto.DeliveryItemDTO;
 import com.koliday.sap.entity.DeliveryEntity;
 import com.koliday.sap.entity.WarehouseEntity;
 import com.koliday.sap.mapper.DeliveryMapper;
+import com.koliday.sap.mapper.InventoryMapper;
 import com.koliday.sap.service.intf.DeliveryService;
 import com.koliday.sap.utils.IdConvertToNoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,15 @@ import java.util.List;
 public class DeliveryServiceImpl implements DeliveryService {
     @Autowired
     private DeliveryMapper deliveryMapper;
+    @Autowired
+    private InventoryMapper inventoryMapper;
     @Override
     public Integer createDelivery(DeliveryEntity deliveryEntity,List<DeliveryItemDTO> deliveryItemDTOList) {
+
+        for(DeliveryItemDTO deliveryItemDTO:deliveryItemDTOList){
+            inventoryMapper.convertQuantity(deliveryItemDTO.getItemid(),deliveryItemDTO.getWhid(),deliveryItemDTO.getQuantity());
+        }
+
         Integer salesOrderCount=deliveryMapper.selectDeliveryCount();
         String deno= IdConvertToNoUtil.convertDelivery(salesOrderCount+1);
         deliveryEntity.setDeno(deno);
@@ -64,6 +73,12 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Override
     public Integer postDelivery(Integer deid) {
+        List<DeliveryItemDTO> deliveryItemDTOList = deliveryMapper.displayDeliveryItem(deid);
+        System.out.println(JSON.toJSONString(deliveryItemDTOList));
+        for(DeliveryItemDTO deliveryItemDTO:deliveryItemDTOList){
+            inventoryMapper.postQuantity(deliveryItemDTO.getItemid(),deliveryItemDTO.getWhid(),deliveryItemDTO.getQuantity());
+        }
+
         return deliveryMapper.postDelivery(deid);
     }
 

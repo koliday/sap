@@ -17,6 +17,7 @@ public class SalesOrderItemDTO {
     private String itemno;
     private String pname;
     private String pno;
+    private Integer pid;
     private BigDecimal price;
     private Integer quantity;
     private BigDecimal netvalue;

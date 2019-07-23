@@ -140,15 +140,15 @@ jQuery(document).ready(function() {
 
         var selectedrow=$(this).parent().parent().parent();
         itemid=selectedrow.children("td:eq(0)").text();
-        var netvalue=parseInt(selectedrow.children("td:eq(3)").text().substring(1));
+        var netvalue=0;
+        $.each(itemlistjson,function(index,item){
+            if(item.item_id==itemid){
+                netvalue=item.net_value;
+            }
+        });
+        var netvalue=parseInt(netvalue);
         $("#add_discount_modal").modal('show');
         //初始化slider范围
-        // itemslider.noUiSlider.updateOptions({
-        //     range: {
-        //         'min': 0,
-        //         'max': netvalue
-        //     }
-        // });
         var ItemDiscountSlider = function() {
             var item = function() {
                 // init slider
@@ -187,6 +187,13 @@ jQuery(document).ready(function() {
             };
         }();
         ItemDiscountSlider.init();
+        itemslider.noUiSlider.updateOptions({
+            range: {
+                'min': 0,
+                'max': netvalue
+            }
+        });
+
     });
 
     function updateagg() {

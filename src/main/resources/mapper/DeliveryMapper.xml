@@ -13,7 +13,7 @@
     </insert>
 
     <select id="getWarehouse" resultType="com.koliday.sap.entity.WarehouseEntity">
-        select whid,whno,concat(whname,",",(select plname from plant where plant.plid= warehouse.plid)) whname,whaddress from warehouse;
+        select whid,whno,concat(whname,'(',(select plname from plant where plant.plid= warehouse.plid),')') whname,whaddress from warehouse;
     </select>
 
     <update id="createDeliveryItem" parameterType="com.koliday.sap.dto.DeliveryItemDTO">
@@ -42,7 +42,7 @@
     </select>
 
     <select id="displayDeliveryItem" resultType="com.koliday.sap.dto.DeliveryItemDTO">
-        select itemid,itemno,(select pname from product where pid=item.pid) pname,quantity,deid,(select plname from plant where plid=(select plid from warehouse where whid=item.whid)) plant,(select whname from warehouse where whid=item.whid) warehouse from item where deid=#{deid};
+        select itemid,itemno,whid,quantity,(select pname from product where pid=item.pid) pname,quantity,deid,(select plname from plant where plid=(select plid from warehouse where whid=item.whid)) plant,(select whname from warehouse where whid=item.whid) warehouse from item where deid=#{deid};
     </select>
 </mapper>
 

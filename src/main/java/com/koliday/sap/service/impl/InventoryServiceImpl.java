@@ -1,8 +1,6 @@
 package com.koliday.sap.service.impl;
 
-import com.koliday.sap.dto.InventoryDTO;
-import com.koliday.sap.dto.PlantDTO;
-import com.koliday.sap.dto.WarehouseDTO;
+import com.koliday.sap.dto.*;
 import com.koliday.sap.mapper.InventoryMapper;
 import com.koliday.sap.service.intf.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +27,18 @@ public class InventoryServiceImpl implements InventoryService {
         return warehouseDTOList;
     }
 
+    @Override
+    public Integer getQuantity(Integer whid, Integer pid) {
+        return inventoryMapper.getQuantity(whid,pid);
+    }
 
+    @Override
+    public List<InventoryByProductDTO> getInventoryByProduct(Integer pid) {
+        List<InventoryByProductDTO> inventoryByProductDTOList=inventoryMapper.getPlantByProduct(pid);
+        for(InventoryByProductDTO inventoryByProductDTO:inventoryByProductDTOList){
+            Integer plid=inventoryByProductDTO.getPlid();
+            inventoryByProductDTO.setWarehouseProductDTOList(inventoryMapper.getInventoryByProduct(pid,plid));
+        }
+        return inventoryByProductDTOList;
+    }
 }

@@ -15,4 +15,14 @@ public interface InventoryMapper {
     List<WarehouseDTO> getWarehouse(@Param("plid") Integer plid);
 
     List<InventoryDTO> getInventory(@Param("whid") Integer whid);
+
+    Integer getQuantity(@Param("whid")Integer whid,@Param("pid")Integer pid);
+
+    Integer convertQuantity(@Param("itemid")Integer itemid,@Param("whid")Integer whid,@Param("quantity")Integer quantity);
+
+    Integer postQuantity(@Param("itemid")Integer itemid,@Param("whid")Integer whid,@Param("quantity")Integer quantity);
+
+    List<WarehouseProductDTO> getInventoryByProduct(@Param("pid") Integer pid,@Param("plid")Integer plid);
+
+    List<InventoryByProductDTO> getPlantByProduct(@Param("pid") Integer pid);
 }

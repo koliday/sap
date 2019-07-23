@@ -33,6 +33,51 @@
         select * from user where uid=#{uid}
     </select>
 
+    <select id="getFiveYearInquiry" resultType="com.koliday.sap.dto.FiveYearInquiryDTO">
+        select year(createdate) year,count(*) count from inquiry where creator=#{uid} group by year(createdate) order by year(createdate) desc limit 5;
+    </select>
+    <select id="getFiveYearOrder" resultType="com.koliday.sap.dto.FiveYearOrderDTO">
+        select year(createdate) year,count(*) count from salesorder where creator=#{uid} group by year(createdate) order by year(createdate) desc limit 5;
+    </select>
+
+    <select id="getPersonalInfo" resultType="com.koliday.sap.dto.PersonalInfoDTO">
+        select eid,eno,ename,level,contact,address,leaderid,(select eno from employee e2 where e2.eid=e1.leaderid) leaderno,(select ename from employee e2 where e2.eid=e1.leaderid) leadername,status from employee e1 where eid=(select eid from user where uid=#{uid});
+    </select>
+
+    <select id="getOrderQuantity" resultType="java.lang.Integer">
+        select count(*) from salesorder where month(createdate)=month(now()) and creator=#{uid};
+    </select>
+    <select id="getInqQuantity" resultType="java.lang.Integer">
+        select count(*) from inquiry where month(createdate)=month(now()) and creator=#{uid};
+    </select>
+
+    <select id="getTotalRevenue" resultType="java.math.BigDecimal">
+        select sum(netvalue) from salesorder where month(createdate)=month(now()) and creator=#{uid};
+    </select>
+
+    <select id="getTotalCost" resultType="java.math.BigDecimal">
+        select sum(cost*quantity) from item a left join salesorder b on a.orid=b.orid left join product c on a.pid=c.pid where month(b.createdate)=month(now()) and creator=#{uid};
+    </select>
+
+    <select id="getNewClientCount" resultType="java.lang.Integer">
+        select count(*) from client where month(createtime)=month(now()) and creator=#{uid};
+    </select>
+
+<select id="getBestSellingProduct" resultType="com.koliday.sap.dto.ProductDTO">
+     select distinct pname,pcategory,pno,c.price,sum(quantity) totalsale
+    from item a
+    left join salesorder b
+    on a.orid=b.orid
+    left join product c
+    on a.pid=c.pid
+    where   month(b.createdate)=month(now()) and pcategory=#{cat} and creator=#{uid}
+    group by a.pid
+    order by sale desc limit 3;
+</select>
+
+    <select id="getFiveYearConversionRateChart" resultType="com.koliday.sap.dto.FiveYearConversionRateDataDTO">
+        select year(createdate),count(*)
+    </select>
 
 
 </mapper>

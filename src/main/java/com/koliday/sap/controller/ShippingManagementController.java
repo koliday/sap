@@ -30,6 +30,7 @@ public class ShippingManagementController {
     public String getCreateDeliveryPage(Model model){
         List<WarehouseEntity> warehouselist = deliveryService.getWarehouse();
         model.addAttribute("warehouselist",warehouselist);
+        System.out.println(JSON.toJSONString(warehouselist));
         return "create_delivery";
     }
     @PostMapping("/createDelivery")

@@ -227,15 +227,60 @@ $(document).ready(function() {
     });
 
     $(document).on("click","#change_item_btn",function(){
+
         $("#change_item_modal").modal('show');
         var selectedrow=$(this).parent().parent().parent();
         itemid=selectedrow.children("td:eq(0)").text();
+        warehouseselect();
+    });
+
+    function warehouseselect(){
+        var whid=$("#warehouse_select").val();
+        var pid=0;
+        var quantity=0;
+        $.each(itemlistjson,function(index,item){
+            if(item.item_id==itemid){
+                pid=item.pid;
+                quantity=item.quantity;
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/getQuantity",
+            data:{
+                pid:pid,
+                whid:whid
+            },
+            dataType: "json",
+            success: function (data) {
+                if(data==null){
+                    $("#available").val("此仓库无该商品！");
+                    $("#change_warehouse_for_item").attr("disabled","disabled");
+                } else {
+                    $("#available").val(data);
+                    if(quantity>parseInt(data)){
+                        $("#change_warehouse_for_item").attr("disabled","disabled");
+                    }else{
+                        $("#change_warehouse_for_item").removeAttr("disabled");
+                    }
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.statusText);
+            }
+        });
+    }
+
+    $("#warehouse_select").change(function () {
+       warehouseselect();
     });
 
     $("#change_warehouse_for_item").click(function () {
         var plantwh=$("#warehouse_select").find("option:selected").text();
-        var plantname=plantwh.split(",",2)[1];
-        var warehousename=plantwh.split(",",2)[0];
+        var plantname=plantwh.split("(",2)[1];
+        plantname=plantname.substring(0,plantname.length-1);
+        var warehousename=plantwh.split("(",2)[0];
         var warehouseid=$("#warehouse_select").val();
         $.each(itemlistjson,function(index,item){
             if(item.item_id==itemid){
@@ -246,6 +291,7 @@ $(document).ready(function() {
         });
         itemtable.originalDataSet=itemlistjson;
         itemtable.reload();
+
         $("#change_item_modal").modal('hide');
     });
     var itemlistjson;

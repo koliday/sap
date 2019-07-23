@@ -2,18 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.koliday.sap.mapper.ProductMapper">
 
-    <resultMap id="ProductMap" type="com.koliday.sap.entity.ProductEntity">
-        <id column="pid" jdbcType="INTEGER" property="pid" />
-        <result column="pno" jdbcType="CHAR" property="pno" />
-        <result column="pname" jdbcType="VARCHAR" property="pname" />
-        <result column="price" jdbcType="DECIMAL" property="price" />
-        <result column="cost" jdbcType="DECIMAL" property="cost" />
-        <result column="weight" jdbcType="DECIMAL" property="weight" />
-    </resultMap>
 
 
 
-    <select id="getAllProduct" resultMap="ProductMap">
+    <select id="getAllProduct" resultType="com.koliday.sap.dto.ProductDTO">
         select * from product;
     </select>
 

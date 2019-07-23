@@ -24,4 +24,33 @@
         from inventory where whid=#{whid};
     </select>
 
+    <select id="getQuantity" resultType="java.lang.Integer">
+        select available from inventory where pid=#{pid} and whid=#{whid};
+    </select>
+
+    <update id="convertQuantity">
+        update inventory set available=available-#{quantity},waittodelivery=waittodelivery+#{quantity} where whid=#{whid} and pid=(select pid from item where itemid=#{itemid});
+    </update>
+
+    <update id="postQuantity">
+        update inventory set waittodelivery=waittodelivery-#{quantity} where whid=#{whid} and pid=(select pid from item where itemid=#{itemid});
+    </update>
+
+    <!--<select id="getAllProduct" resultType="com.koliday.sap.dto.ProductDTO">-->
+        <!--select * from product;-->
+    <!--</select>-->
+
+    <select id="getInventoryByProduct" resultType="com.koliday.sap.dto.WarehouseProductDTO">
+        select
+        inventory.whid,whno,whname,whaddress,available,waittodelivery
+        from inventory
+        left join warehouse
+        on inventory.whid=warehouse.whid
+        where pid=#{pid} and plid=#{plid};
+    </select>
+    <select id="getPlantByProduct" resultType="com.koliday.sap.dto.InventoryByProductDTO">
+        select plid,plno,plname,pladdress from plant where plid in(select plid from warehouse where whid in(select whid from inventory where pid=#{pid}));
+    </select>
+
+
 </mapper>

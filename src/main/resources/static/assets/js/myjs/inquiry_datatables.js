@@ -191,7 +191,7 @@ jQuery(document).ready(function() {
         $.each(itemJSONData,function(index,item){
             pro+=parseFloat(item.exp_profit);
         });
-        pro.toFixed(2);
+        pro=pro.toFixed(2);
         $("#expect_value").val('$'+pro);
         return pro;
     }
@@ -259,7 +259,7 @@ jQuery(document).ready(function() {
                     result+=inidString;
                     var inno=result;
                     $("#inquiry_no").val(inno);
-                    $("#success_text").text("Inquiry No. "+inno+"has been created !");
+                    $("#success_text").text("Inquiry No. "+inno+" has been created !");
                     $("#success_alert").slideDown();
                 }else{
                     $("#fail_text").text("Error when inquiry!Please retry!");

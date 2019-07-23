@@ -11,11 +11,11 @@ import java.math.BigDecimal;
 public class DeliveryItemDTO {
 
     @JSONField(name="itemid")
-    private String itemid;
+    private Integer itemid;
     @JSONField(name="item_id")
     private String item_id;
     @JSONField(name="whid")
-    private String whid;
+    private Integer whid;
     private String itemno;
     private String pname;
     private Integer quantity;
