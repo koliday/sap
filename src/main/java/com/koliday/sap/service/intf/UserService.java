@@ -19,4 +19,11 @@ public interface UserService {
     BestSellingProdctDTO getBestSellingProduct(Integer uid);
 
     FiveYearConversionRateDTO getFiveYearConversionRateChart(Integer uid);
+
+
+    List<CountryDistributionDTO> getFiveYearCountryDistributionChart(Integer uid);
+
+    List<FiveYearNewClientDTO> getYearlyNewClientChart(Integer uid);
+
+    List<FiveYearRevenueProfitDTO> getYearlyRevenueProfitChart(Integer uid);
 }

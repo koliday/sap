@@ -64,7 +64,7 @@
     </select>
 
 <select id="getBestSellingProduct" resultType="com.koliday.sap.dto.ProductDTO">
-     select distinct pname,pcategory,pno,c.price,sum(quantity) totalsale
+     select distinct a.pid,pname,pcategory,pno,c.price,sum(quantity) totalsale
     from item a
     left join salesorder b
     on a.orid=b.orid
@@ -72,12 +72,38 @@
     on a.pid=c.pid
     where   month(b.createdate)=month(now()) and pcategory=#{cat} and creator=#{uid}
     group by a.pid
-    order by sale desc limit 3;
+    order by totalsale desc limit 3;
 </select>
 
-    <select id="getFiveYearConversionRateChart" resultType="com.koliday.sap.dto.FiveYearConversionRateDataDTO">
-        select year(createdate),count(*)
+
+
+    <select id="getFiveYearCatValue" resultType="com.koliday.sap.dto.FiveYearValueDTO">
+        select year(createdate) year,
     </select>
 
+    <select id="getFiveYearCountryDistributionChart" resultType="com.koliday.sap.dto.CountryDistributionDTO">
+        select country label,count(*) data
+from client cl
+left join city ct
+on cl.city=ct.cityid
+where creator=#{uid} and year(createtime)>year(now())-5
+group by label order by data desc limit 4;
+    </select>
+
+    <select id="getClientCount" resultType="java.lang.Integer">
+        select count(*) from client where creator=#{uid};
+    </select>
+
+    <select id="getYearlyNewClientChart" resultType="com.koliday.sap.dto.FiveYearNewClientDTO">
+        select year(createtime) year,count(*) count from client where creator=#{uid} group by year(createtime) order by year desc limit 5;
+    </select>
+
+    <select id="getFiveYearRevenue" resultType="com.koliday.sap.dto.FiveYearRevenueDTO">
+        select sum(netvalue) count,year(createdate) year from salesorder where creator=#{uid} group by year(createdate) order by year(createdate) desc limit 5;
+    </select>
+
+    <select id="getFiveYearCost" resultType="com.koliday.sap.dto.FiveYearCostDTO">
+        select sum(cost*quantity) count,year(createdate) year from salesorder a left join item b on a.orid=b.orid left join product c on b.pid=c.pid where creator=#{uid} group by year(createdate) order by year(createdate) desc limit 5;
+    </select>
 
 </mapper>

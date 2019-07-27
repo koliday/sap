@@ -2,6 +2,14 @@ var yearly_inquiry_and_orders_vol_chart_data;
 
 var conversion_rate_data;
 var conversion_rate_year;
+
+var profit_year;
+var profit_data;
+
+
+
+
+
 var KTMorrisChartsDemo = function() {
 
     // Private functions
@@ -19,33 +27,7 @@ var KTMorrisChartsDemo = function() {
         });
     }
 
-        // [
-        // {
-        //     y: '2014',
-        //     a: 100,
-        //     b: 90
-        // },
-        //     {
-        //         y: '2015',
-        //         a: 75,
-        //         b: 65
-        //     },
-        //     {
-        //         y: '2016',
-        //         a: 50,
-        //         b: 40
-        //     },
-        //     {
-        //         y: '2017',
-        //         a: 75,
-        //         b: 65
-        //     },
-        //     {
-        //         y: '2018',
-        //         a: 50,
-        //         b: 40
-        //     }
-        // ]
+
 
     return {
         // public functions
@@ -60,14 +42,6 @@ var KTFlotchartsDemo = function() {
     //Private functions
 
     var demo1 = function() {
-        // var pageviews = [
-        //     [2014, 0.65],
-        //     [2015, 0.55],
-        //     [2016, 0.72],
-        //     [2017, 0.45],
-        //     [2018, 0.85]
-        //
-        // ];
 
         var plot = $.plot($("#conversion_rate_chart"), [{
             data: conversion_rate_data,
@@ -157,10 +131,12 @@ var KTFlotchartsDemo = function() {
         });
     }
 
+
+
+
     return {
         // public functions
         init: function() {
-            // default charts
             demo1();
         }
     };
@@ -185,6 +161,8 @@ jQuery(document).ready(function() {
         }
     });
 
+
+
     $.ajax({
         type: "POST",
         url: "http://localhost:8080/getFiveYearConversionRateChart",
@@ -201,6 +179,7 @@ jQuery(document).ready(function() {
             alert(jqXHR.statusText);
         }
     });
+
 
     KTMorrisChartsDemo.init();
 

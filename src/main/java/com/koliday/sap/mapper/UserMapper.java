@@ -43,5 +43,15 @@ public interface UserMapper {
 
     List<ProductDTO> getBestSellingProduct(@Param("uid") Integer uid,@Param("cat")String category);
 
-    List<FiveYearConversionRateDataDTO> getFiveYearConversionRateChart(@Param("uid") Integer uid);
+    List<FiveYearValueDTO> getFiveYearCatValue(@Param("table")String table,@Param("cat")String category,@Param("uid")Integer uid);
+
+    List<CountryDistributionDTO> getFiveYearCountryDistributionChart(@Param("uid") Integer uid);
+
+    Integer getClientCount(@Param("uid")Integer uid);
+
+    List<FiveYearNewClientDTO> getYearlyNewClientChart(@Param("uid") Integer uid);
+
+    List<FiveYearRevenueDTO> getFiveYearRevenue(@Param("uid")Integer uid);
+
+    List<FiveYearCostDTO> getFiveYearCost(@Param("uid")Integer uid);
 }

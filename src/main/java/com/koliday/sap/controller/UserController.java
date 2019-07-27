@@ -89,6 +89,15 @@ public class UserController {
         return JSON.toJSONString(fiveYearInquiryOrderChart);
     }
 
+    @PostMapping("/getYearlyNewClientChart")
+    @ResponseBody
+    public String getYearlyNewClientChart(HttpSession session){
+        UserDTO user=(UserDTO)session.getAttribute("user");
+        Integer uid=user.getUid();
+        List<FiveYearNewClientDTO> yearlyNewClientChart = userService.getYearlyNewClientChart(uid);
+        System.out.println(JSON.toJSONString(yearlyNewClientChart));
+        return JSON.toJSONString(yearlyNewClientChart);
+    }
 
     @GetMapping("/personalinfo")
     public String getPersonalInfoPage(HttpSession session, Model model){
@@ -104,7 +113,9 @@ public class UserController {
         UserDTO user=(UserDTO)session.getAttribute("user");
         Integer uid=user.getUid();
         MonthlyPerformanceDTO monthlyPerformance = userService.getMonthlyPerformance(uid);
+        BestSellingProdctDTO bestSellingProduct = userService.getBestSellingProduct(uid);
         model.addAttribute("pef",monthlyPerformance);
+        model.addAttribute("sell",bestSellingProduct);
         return "financesummary";
     }
 
@@ -117,4 +128,27 @@ public class UserController {
         System.out.println(JSON.toJSONString(fiveYearConversionRateChart));
         return JSON.toJSONString(fiveYearConversionRateChart);
     }
+
+    @PostMapping("/getYearlyRevenueProfitChart")
+    @ResponseBody
+    public String getYearlyRevenueProfitChart(HttpSession session){
+        UserDTO user=(UserDTO)session.getAttribute("user");
+        Integer uid=user.getUid();
+        List<FiveYearRevenueProfitDTO> yearlyRevenueProfitChart = userService.getYearlyRevenueProfitChart(uid);
+        System.out.println(JSON.toJSONString(yearlyRevenueProfitChart));
+        return JSON.toJSONString(yearlyRevenueProfitChart);
+    }
+
+    @PostMapping("/getFiveYearCountryDistributionChart")
+    @ResponseBody
+    public String getFiveYearCountryDistributionChart(HttpSession session){
+        UserDTO user=(UserDTO)session.getAttribute("user");
+        Integer uid=user.getUid();
+        List<CountryDistributionDTO> fiveYearCountryDistributionChart = userService.getFiveYearCountryDistributionChart(uid);
+        return JSON.toJSONString(fiveYearCountryDistributionChart);
+    }
+
+
+
+
 }

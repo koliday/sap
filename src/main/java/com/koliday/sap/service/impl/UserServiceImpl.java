@@ -3,6 +3,7 @@ package com.koliday.sap.service.impl;
 import com.koliday.sap.dto.*;
 import com.koliday.sap.entity.EmployeeEntity;
 import com.koliday.sap.entity.UserEntity;
+import com.koliday.sap.mapper.ClientMapper;
 import com.koliday.sap.mapper.UserMapper;
 import com.koliday.sap.service.intf.UserService;
 import com.koliday.sap.utils.MD5Util;
@@ -12,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -165,5 +163,48 @@ public class UserServiceImpl implements UserService {
         fiveYearConversionRateDTO.setYear(year);
         fiveYearConversionRateDTO.setData(data);
         return fiveYearConversionRateDTO;
+    }
+
+
+
+
+    @Override
+    public List<CountryDistributionDTO> getFiveYearCountryDistributionChart(Integer uid) {
+        List<CountryDistributionDTO> fiveYearCountryDistributionChart = userMapper.getFiveYearCountryDistributionChart(uid);
+        int clientCount=userMapper.getClientCount(uid);
+        int firstFourCount=0;
+        for(CountryDistributionDTO countryDistributionDTO:fiveYearCountryDistributionChart){
+            firstFourCount+=countryDistributionDTO.getData();
+        }
+        CountryDistributionDTO leftClient=new CountryDistributionDTO();
+        leftClient.setLabel("Other");
+        leftClient.setData(clientCount-firstFourCount);
+        fiveYearCountryDistributionChart.add(leftClient);
+        return fiveYearCountryDistributionChart;
+    }
+
+    @Override
+    public List<FiveYearNewClientDTO> getYearlyNewClientChart(Integer uid) {
+        List<FiveYearNewClientDTO> yearlyNewClientChart = userMapper.getYearlyNewClientChart(uid);
+        Collections.reverse(yearlyNewClientChart);
+        return yearlyNewClientChart;
+    }
+
+    @Override
+    public List<FiveYearRevenueProfitDTO> getYearlyRevenueProfitChart(Integer uid) {
+        List<FiveYearRevenueDTO> fiveYearRevenue = userMapper.getFiveYearRevenue(uid);
+        List<FiveYearCostDTO> fiveYearCost = userMapper.getFiveYearCost(uid);
+        List<FiveYearRevenueProfitDTO> fiveYearRevenueProfitDTOList=new LinkedList<>();
+        for(int i=0;i<5;i++){
+            FiveYearRevenueProfitDTO fiveYearRevenueProfitDTO=new FiveYearRevenueProfitDTO();
+            fiveYearRevenueProfitDTO.setYear(fiveYearRevenue.get(i).getYear());
+            fiveYearRevenueProfitDTO.setRevenue(fiveYearRevenue.get(i).getCount());
+            if(fiveYearCost.get(i).getCount()==null){
+                fiveYearCost.get(i).setCount(0);
+            }
+            fiveYearRevenueProfitDTO.setProfit(fiveYearRevenue.get(i).getCount()-fiveYearCost.get(i).getCount());
+            ((LinkedList<FiveYearRevenueProfitDTO>) fiveYearRevenueProfitDTOList).addFirst(fiveYearRevenueProfitDTO);
+        }
+        return fiveYearRevenueProfitDTOList;
     }
 }
