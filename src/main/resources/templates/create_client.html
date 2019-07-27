@@ -138,17 +138,17 @@
                                                     <label>City/Country</label>
                                                     <select class="form-control kt-select2" id="city_select" name="param">
                                                         <optgroup label="Asia">
-                                                            <option value="1">Shanghai,China</option>
-                                                            <option value="2">Beijing,China</option>
+                                                            <option th:each="city,citystatus : ${citylist}" th:if="${city.getContinent()=='Asia'}" th:value="${city.getCityid()}" th:text="${city.getCity()}">Shanghai,China</option>
                                                         </optgroup>
                                                         <optgroup label="Europe">
-                                                            <option value="3">London,UK</option>
-                                                            <option value="4">Paris,France</option>
-                                                        </optgroup>
+															<option th:each="city,citystatus : ${citylist}" th:if="${city.getContinent()=='Europe'}" th:value="${city.getCityid()}" th:text="${city.getCity()}">Shanghai,China</option>
+														</optgroup>
                                                         <optgroup label="North America">
-                                                            <option value="5">New York,USA</option>
-                                                            <option value="6">Miami,USA</option>
-                                                        </optgroup>
+															<option th:each="city,citystatus : ${citylist}" th:if="${city.getContinent()=='North America'}" th:value="${city.getCityid()}" th:text="${city.getCity()}">Shanghai,China</option>
+														</optgroup>
+														<optgroup label="Oceania">
+															<option th:each="city,citystatus : ${citylist}" th:if="${city.getContinent()=='Oceania'}" th:value="${city.getCityid()}" th:text="${city.getCity()}">Shanghai,China</option>
+														</optgroup>
                                                     </select>
 												</div>
 												<div class="form-group col-6">
@@ -156,8 +156,6 @@
 													<input id="postal_code" type="text" class="form-control" placeholder="Enter your client's postal code">
 												</div>
 											</div>
-
-
 											<div class="form-group">
 												<label>Address</label>
 												<input id="address" type="text" class="form-control" placeholder="Enter your client's address">
@@ -184,12 +182,6 @@
 										   style="text-decoration: underline;">
 											Create another contact person
 										</a>
-									</div>
-									<div class="alert-close">
-										<button id="view_created_customer" type="button" class="btn btn-success"
-												aria-label="Close">
-											View
-										</button>
 									</div>
 								</div>
 
@@ -284,23 +276,6 @@
 						</div>
 					</div>
 
-					<!-- begin:: Footer -->
-					<div class="kt-footer kt-grid__item" id="kt_footer">
-						<div class="kt-container">
-							<div class="kt-footer__wrapper">
-								<div class="kt-footer__copyright">
-									2019&nbsp;&copy;&nbsp;<a href="http://keenthemes.com/metronic" target="_blank" class="kt-link">Keenthemes</a>
-								</div>
-								<div class="kt-footer__menu">
-									<a href="http://keenthemes.com/metronic" target="_blank" class="kt-link">About</a>
-									<a href="http://keenthemes.com/metronic" target="_blank" class="kt-link">Team</a>
-									<a href="http://keenthemes.com/metronic" target="_blank" class="kt-link">Contact</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- end:: Footer -->
 				</div>
 			</div>
 		</div>

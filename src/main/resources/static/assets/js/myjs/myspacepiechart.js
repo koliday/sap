@@ -201,7 +201,7 @@ jQuery(document).ready(function() {
 
     $("#revenue_tab").click(function () {
         demo25.redraw();
-        $('svg').css({ width: '100%' });
+        // $('svg').css({ width: '100%' });
     });
 
 

@@ -84,7 +84,7 @@ $(document).ready(function() {
                         autoHide: false,
                         template: function() {
                             return '\
-						<a id="create_invoice_btn" href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Create Delivery">\
+						<a id="create_invoice_btn" href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Create Invoice">\
 							<i class="la la-plus"></i>\
 						</a>\
 					';
@@ -276,7 +276,7 @@ $(document).ready(function() {
                 $("#create_date").val(M+"/"+D+"/"+Y);
                 $("#billing_date").val(M+"/"+D+"/"+Y);
 
-                $("#net_value").val(data.salesOrderDTO.netvalue);
+                $("#net_value").val("$"+data.salesOrderDTO.netvalue);
                 $("#create_salesOrder_portlet_title").text("Create Invoice For Order NO. "+data.salesOrderDTO.orno);
                 var itemlistjson=data.salesOrderItemDTOList;
 

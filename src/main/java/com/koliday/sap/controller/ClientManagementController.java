@@ -1,6 +1,7 @@
 package com.koliday.sap.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.koliday.sap.dto.CityDTO;
 import com.koliday.sap.dto.ClientDTO;
 import com.koliday.sap.dto.UserDTO;
 import com.koliday.sap.entity.*;
@@ -29,7 +30,9 @@ public class ClientManagementController {
     @Autowired
     private LocalDataService localDataService;
     @GetMapping("/clientoverview")
-    public String getClientManagementPage(){
+    public String getClientManagementPage(Model model){
+        List<CityDTO> cityDTOList=clientService.selectCity();
+        model.addAttribute("citylist",cityDTOList);
         return "client_overview";
     }
     @GetMapping("/createcontactperson")
@@ -47,10 +50,12 @@ public class ClientManagementController {
     @GetMapping("/createclient")
     public String getNewClientPage(Model model){
 
+        List<CityDTO> cityDTOList=clientService.selectCity();
         List<VipEntity> vipList = localDataService.getVipList();
         List<DepartmentEntity> depList = localDataService.getDepList();
         List<CallFreqEntity> callFreqList = localDataService.getCallFreqList();
         List<FuncEntity> funcList = localDataService.getFuncList();
+        model.addAttribute("citylist",cityDTOList);
         model.addAttribute("viplist",vipList);
         model.addAttribute("deplist",depList);
         model.addAttribute("callfreqlist",callFreqList);
@@ -170,7 +175,9 @@ public class ClientManagementController {
     }
 
     @GetMapping("/editclient")
-    public String getEditClientPage(){
+    public String getEditClientPage(Model model){
+        List<CityDTO> cityDTOList=clientService.selectCity();
+        model.addAttribute("citylist",cityDTOList);
         return "edit_client";
     }
 
@@ -244,6 +251,8 @@ public class ClientManagementController {
         model.addAttribute("funclist",funcList);
         return "client_overview::cplistrefresh";
     }
+
+
 
 
 }

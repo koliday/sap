@@ -53,6 +53,7 @@ $(document).ready(function() {
             $("#client_name").val(client_name);
             $("#office_tel").val(office_tel);
             $("#city_select").val(city_select);
+
             $("#postal_code").val(postal_code);
             $("#address").val(address);
             return;
@@ -116,7 +117,10 @@ $(document).ready(function() {
                 if(data!=null){
                     $("#client_name").val(data.clname);
                     $("#office_tel").val(data.clcontact);
-                    $("#city_select").val(data.city);
+                    // $("#city_select").val(data.city);
+                    // $("#city_select").select2('val',data.city);
+                    // $("#city_select").text(data.citystr);
+                    $("#city_select").val([data.city]).trigger('change');
                     $("#postal_code").val(data.postcode);
                     $("#address").val(data.claddress);
                 }else{

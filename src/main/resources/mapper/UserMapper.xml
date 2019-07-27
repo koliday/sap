@@ -106,4 +106,6 @@ group by label order by data desc limit 4;
         select sum(cost*quantity) count,year(createdate) year from salesorder a left join item b on a.orid=b.orid left join product c on b.pid=c.pid where creator=#{uid} group by year(createdate) order by year(createdate) desc limit 5;
     </select>
 
+
+
 </mapper>

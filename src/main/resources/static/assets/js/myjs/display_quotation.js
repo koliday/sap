@@ -85,7 +85,7 @@ $(document).ready(function() {
                         template: function() {
                             return '\
 						<a id="view_quotation_btn" href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit Contact Person">\
-							<i class="la la-info"></i>\
+							<i class="la la-info-circle"></i>\
 						</a>\
 					';
                         },
@@ -234,8 +234,8 @@ $(document).ready(function() {
                 $("#clno").val(data.quotationDTO.client);
                 $("#created_by").val(data.quotationDTO.creator);
                 $("#create_date").val(parseDate(data.quotationDTO.createdate));
-                $("#net_value").val(data.quotationDTO.netvalue);
-                $("#expect_value").val(data.quotationDTO.expectvalue);
+                $("#net_value").val("$"+data.quotationDTO.netvalue);
+                $("#expect_value").val("$"+data.quotationDTO.expectvalue);
                 $("#valid_from").val(parseDate(data.quotationDTO.validfrom));
                 $("#valid_to").val(parseDate(data.quotationDTO.validto));
                 $("#req_date").val(parseDate(data.quotationDTO.reqdate));

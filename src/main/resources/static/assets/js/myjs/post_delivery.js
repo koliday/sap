@@ -84,8 +84,8 @@ $(document).ready(function() {
                         autoHide: false,
                         template: function() {
                             return '\
-						<a id="post_delivery_btn" href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Create Delivery">\
-							<i class="la la-save"></i>\
+						<a id="post_delivery_btn" href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Post Delivery">\
+							<i class="la la-exchange"></i>\
 						</a>\
 					';
                         },

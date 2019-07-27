@@ -1,5 +1,6 @@
 package com.koliday.sap.mapper;
 
+import com.koliday.sap.dto.CityDTO;
 import com.koliday.sap.entity.ClientEntity;
 import com.koliday.sap.entity.ContactPersonEntity;
 import org.apache.ibatis.annotations.Param;
@@ -24,4 +25,6 @@ public interface ClientMapper {
     List<ContactPersonEntity> getContactPersonListByClid(@Param("clid") Integer clid);
 
     Integer updateContactPerson(@Param("cp") ContactPersonEntity contactPerson);
+
+    List<CityDTO> selectCity();
 }

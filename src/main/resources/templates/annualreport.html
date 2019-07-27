@@ -131,14 +131,14 @@
                                         <li class="nav-item">
                                             <a class="nav-link active" data-toggle="tab" href="#orders_content"
                                                role="tab">
-                                                Orders
+                                                Orders & Revenue
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a id="revenue_tab" class="nav-link" data-toggle="tab" href="#revenue_content" role="tab">
-                                                Revenue
-                                            </a>
-                                        </li>
+                                        <!--<li class="nav-item">-->
+                                            <!--<a id="revenue_tab" class="nav-link" data-toggle="tab" href="#revenue_content" role="tab">-->
+                                                <!--Revenue-->
+                                            <!--</a>-->
+                                        <!--</li>-->
                                         <li class="nav-item">
                                             <a id="customer_tab" class="nav-link" data-toggle="tab" href="#profile_content" role="tab">
                                                 Customer Profile
@@ -150,18 +150,20 @@
                             <div class="kt-portlet__body">
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="orders_content" aria-expanded="true">
-                                        <p style="text-align: center;font-size: 20px;">Yearly Inquiry & Orders Vol.</p>
+                                        <p style="text-align: center;font-size: 20px;">Yearly Inquiry & Orders Qty.</p>
                                         <div id="yearly_inquiry_and_orders_vol_chart" style="height:500px;"></div>
                                         <div class="kt-separator" style="margin-top: 30px;margin-bottom: 20px"></div>
                                         <p style="text-align: center;font-size: 20px;">Yearly Inquiry-to-Order
                                             Conversion Rate</p>
                                         <div id="conversion_rate_chart" style="height: 300px;"></div>
-
-                                    </div>
-                                    <div class="tab-pane" id="revenue_content" aria-expanded="true">
+                                        <div class="kt-separator" style="margin-top: 30px;margin-bottom: 20px"></div>
                                         <p style="text-align: center;font-size: 20px;">Yearly Total Revenue & Profit</p>
                                         <div id="revenue_profit_chart" style="height:500px;"></div>
                                     </div>
+                                    <!--<div class="tab-pane" id="revenue_content" aria-expanded="true">-->
+                                        <!--<p style="text-align: center;font-size: 20px;">Yearly Total Revenue & Profit</p>-->
+                                        <!--<div id="revenue_profit_chart" style="height:500px;"></div>-->
+                                    <!--</div>-->
                                     <div class="tab-pane" id="profile_content" aria-expanded="true">
                                         <p style="text-align: center;font-size: 20px;">Country Distribution of Customers in Recent 5 Years</p>
                                         <div id="country_distribution_chart" style="margin-left:30%;width:400px;height: 400px;"></div>

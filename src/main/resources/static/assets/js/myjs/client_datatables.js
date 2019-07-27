@@ -87,9 +87,6 @@ var KTDatatableDataLocalDemo = function() {
 						<a href="javascript:;" id="view_client" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">\
 							<i class="la la-info-circle"></i>\
 						</a>\
-						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Delete">\
-							<i class="la la-trash"></i>\
-						</a>\
 					';
 					},
 				}],

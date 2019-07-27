@@ -85,10 +85,10 @@ $(document).ready(function() {
                         template: function() {
                             return '\
 						<a id="view_invoice_btn" href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="View Invoice">\
-							<i class="la la-info"></i>\
+							<i class="la la-info-circle"></i>\
 						</a>\
 						<a id="preview_invoice_btn" href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Preview Invoice">\
-						    <i class="la la-info"></i>\
+						    <i class="la la-print"></i>\
 						 </a>\
 					';
                         },
@@ -242,7 +242,7 @@ $(document).ready(function() {
                 $("#created_by").val(data.invoiceDTO.creator);
                 $("#create_date").val(parseDate(data.invoiceDTO.createdate));
                 $("#billing_date").val(parseDate(data.invoiceDTO.billingdate));
-                $("#net_value").val(data.invoiceDTO.netvalue);
+                $("#net_value").val("$"+data.invoiceDTO.netvalue);
                 $("#create_salesOrder_portlet_title").text("Display Invoice No. "+data.invoiceDTO.ivno)
                 var itemlistjson=data.salesOrderItemDTOList;
 

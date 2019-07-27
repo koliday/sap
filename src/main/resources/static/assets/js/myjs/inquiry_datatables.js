@@ -93,7 +93,7 @@ var KTDatatableData = function() {
                     template: function() {
                         return '\
 						<a id="delete_item_btn" href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Delete">\
-							<i class="la la-minus"></i>\
+							<i class="la la-minus-circle"></i>\
 						</a>\
 					';
                     },

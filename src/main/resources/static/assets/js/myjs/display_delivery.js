@@ -85,7 +85,7 @@ $(document).ready(function() {
                         template: function() {
                             return '\
 						<a id="view_delivery_btn" href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Create Delivery">\
-							<i class="la la-info"></i>\
+							<i class="la la-info-circle"></i>\
 						</a>\
 					';
                         },

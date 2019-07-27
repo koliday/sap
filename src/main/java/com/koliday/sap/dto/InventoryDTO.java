@@ -3,6 +3,8 @@ package com.koliday.sap.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 public class InventoryDTO {
@@ -11,8 +13,8 @@ public class InventoryDTO {
     private Integer pid;
     private String pname;
     private String pno;
-    private Integer price;
-    private Integer cost;
+    private BigDecimal price;
+    private BigDecimal cost;
     private Integer available;
     private Integer waittodelivery;
 }

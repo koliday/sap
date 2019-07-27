@@ -26,4 +26,6 @@ public interface UserService {
     List<FiveYearNewClientDTO> getYearlyNewClientChart(Integer uid);
 
     List<FiveYearRevenueProfitDTO> getYearlyRevenueProfitChart(Integer uid);
+
+
 }

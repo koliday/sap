@@ -85,7 +85,7 @@ $(document).ready(function() {
                         template: function() {
                             return '\
 						<a id="view_quotation_btn" href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit Contact Person">\
-							<i class="la la-info"></i>\
+							<i class="la la-info-circle"></i>\
 						</a>\
 					';
                         },
@@ -234,7 +234,7 @@ $(document).ready(function() {
                 $("#clno").val(data.salesOrderDTO.client);
                 $("#created_by").val(data.salesOrderDTO.creator);
                 $("#create_date").val(parseDate(data.salesOrderDTO.createdate));
-                $("#net_value").val(data.salesOrderDTO.netvalue);
+                $("#net_value").val("$"+data.salesOrderDTO.netvalue);
                 $("#valid_from").val(parseDate(data.salesOrderDTO.validfrom));
                 $("#valid_to").val(parseDate(data.salesOrderDTO.validto));
                 $("#req_date").val(parseDate(data.salesOrderDTO.reqdate));

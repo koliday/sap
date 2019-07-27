@@ -97,21 +97,21 @@
                                             <thead>
                                             <tr>
                                                 <th>Product</th>
-                                                <th>Price</th>
-                                                <th>Quantity</th>
-                                                <th>Discount from item</th>
-                                                <th>Discount from net</th>
-                                                <th>Value</th>
+                                                <th style="text-align: center;">Price</th>
+                                                <th style="text-align: center;">Qty.</th>
+                                                <th style="text-align: center;">Item Dis.</th>
+                                                <th style="text-align: center;">Item Dis.</th>
+                                                <th style="text-align: center;">Value</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr th:each="item,itemstatus : ${invoice.getItemlist()}">
                                                 <td th:text="${item.getPname()+'('+item.getPno()+')'}"></td>
-                                                <td th:text="${'$'+item.getPrice()}"></td>
-                                                <td th:text="${item.getQuantity()}"></td>
-                                                <td th:text="${'$'+item.getDiscount()}"></td>
-                                                <td th:text="${item.getOrderdiscount()+'%'}"></td>
-                                                <td th:text="${'$'+item.getFinalvalue()}" class="kt-font-danger"></td>
+                                                <td style="text-align: center;" th:text="${'$'+item.getPrice()}"></td>
+                                                <td style="text-align: center;" th:text="${item.getQuantity()}"></td>
+                                                <td style="text-align: center;" th:text="${'$'+item.getDiscount()}"></td>
+                                                <td style="text-align: center;" th:text="${item.getOrderdiscount()+'%'}"></td>
+                                                <td style="text-align: center;" th:text="${'$'+item.getFinalvalue()}" class="kt-font-danger"></td>
                                             </tr>
                                             </tbody>
                                         </table>

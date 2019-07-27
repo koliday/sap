@@ -1,5 +1,6 @@
 package com.koliday.sap.service.intf;
 
+import com.koliday.sap.dto.CityDTO;
 import com.koliday.sap.dto.ClientDTO;
 import com.koliday.sap.entity.ClientEntity;
 import com.koliday.sap.entity.ContactPersonEntity;
@@ -20,4 +21,6 @@ public interface ClientService {
     List<ContactPersonEntity> getContactPersonListByClid(Integer clid);
 
     Integer updateContactPerson(ContactPersonEntity contactPerson);
+
+    List<CityDTO> selectCity();
 }

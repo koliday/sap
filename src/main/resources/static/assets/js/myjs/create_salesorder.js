@@ -85,7 +85,7 @@ $(document).ready(function() {
                         template: function() {
                             return '\
 						<a id="view_quotation_btn" href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit Contact Person">\
-							<i class="la la-info"></i>\
+							<i class="la la-plus"></i>\
 						</a>\
 					';
                         },
@@ -286,7 +286,7 @@ $(document).ready(function() {
                 var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1);
                 var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
                 $("#create_date").val(M+"/"+D+"/"+Y);
-                $("#net_value").val(data.quotationDTO.expectvalue);
+                $("#net_value").val("$"+data.quotationDTO.expectvalue);
                 // $("#expect_value").val(data.quotationDTO.expectvalue);
                 // $("#valid_from").val(parseDate(data.quotationDTO.validfrom));
                 // $("#valid_to").val(parseDate(data.quotationDTO.validto));

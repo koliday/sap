@@ -1,5 +1,6 @@
 package com.koliday.sap.service.impl;
 
+import com.koliday.sap.dto.CityDTO;
 import com.koliday.sap.dto.ClientDTO;
 import com.koliday.sap.dto.UserDTO;
 import com.koliday.sap.entity.ClientEntity;
@@ -89,5 +90,10 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Integer updateContactPerson(ContactPersonEntity contactPerson) {
         return clientMapper.updateContactPerson(contactPerson);
+    }
+
+    @Override
+    public List<CityDTO> selectCity() {
+        return clientMapper.selectCity();
     }
 }

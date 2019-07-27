@@ -49,7 +49,7 @@
         update client set clname=#{client.clname},clcontact=#{client.clcontact},claddress=#{client.claddress},city=#{client.city},postcode=#{client.postcode} where clid=#{client.clid}
     </update>
     <select id="getClientByClid" resultType="com.koliday.sap.entity.ClientEntity">
-        select * from client where clid=#{clid}
+        select *,(select concat(city.city,",",country) from city where city.cityid=client.city) citystr from client where clid=#{clid};
     </select>
     <select id="getContactPersonListByClid" resultType="com.koliday.sap.entity.ContactPersonEntity">
         select * from contactperson where clid=#{clid};
@@ -60,7 +60,9 @@
     </update>
 
 
-
+    <select id="selectCity" resultType="com.koliday.sap.dto.CityDTO">
+        select cityid,concat(city,",",country) city,continent from city;
+    </select>
 
 </mapper>
 

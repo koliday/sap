@@ -82,7 +82,7 @@ $(document).ready(function() {
                         template: function() {
                             return '\
 						<a id="view_product_btn" href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="View Plant">\
-							<i class="la la-info"></i>\
+							<i class="la la-info-circle"></i>\
 						</a>\
 					';
                         },

@@ -118,7 +118,7 @@ jQuery(document).ready(function() {
 
     KTDatatableData.init();
 
-
+    var quantity;
     var itemlistjson=[];
     var itemid=0;
     $("#add_discount_to_item").click(function () {
@@ -128,7 +128,7 @@ jQuery(document).ready(function() {
         item_discount=parseInt(item_discount.substring(1));
         $.each(itemlistjson,function(index,item){
             if(item.item_id==itemid){
-                item.discount=item_discount;
+                item.discount=item_discount*quantity;
             }
         });
         itemtable.originalDataSet=itemlistjson;
@@ -144,9 +144,11 @@ jQuery(document).ready(function() {
         $.each(itemlistjson,function(index,item){
             if(item.item_id==itemid){
                 netvalue=item.net_value;
+                quantity=item.quantity;
             }
         });
-        var netvalue=parseInt(netvalue);
+
+        var netvalue=parseInt(netvalue/quantity*0.8);
         $("#add_discount_modal").modal('show');
         //初始化slider范围
         var ItemDiscountSlider = function() {

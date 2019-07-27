@@ -14,6 +14,7 @@ public class ClientEntity {
     private String clcontact;
     private String claddress;
     private Integer city;
+    private String citystr;
     private String postcode;
     private Integer creator;
     private Date createtime;

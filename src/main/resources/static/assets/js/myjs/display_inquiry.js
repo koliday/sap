@@ -85,7 +85,7 @@ $(document).ready(function() {
                         template: function() {
                             return '\
 						<a id="view_inquiry_btn" href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit Contact Person">\
-							<i class="la la-info"></i>\
+							<i class="la la-info-circle"></i>\
 						</a>\
 					';
                         },
@@ -235,8 +235,8 @@ $(document).ready(function() {
                 $("#clno").val(data.inquiryDTO.client);
                 $("#created_by").val(data.inquiryDTO.creator);
                 $("#create_date").val(parseDate(data.inquiryDTO.createdate));
-                $("#net_value").val(data.inquiryDTO.netvalue);
-                $("#expect_value").val(data.inquiryDTO.expectprofit);
+                $("#net_value").val("$"+data.inquiryDTO.netvalue);
+                $("#expect_value").val("$"+data.inquiryDTO.expectprofit);
                 $("#valid_from").val(parseDate(data.inquiryDTO.validfrom));
                 $("#valid_to").val(parseDate(data.inquiryDTO.validto));
                 $("#create_inquiry_portlet_title").text("Display Inquiry NO. "+data.inquiryDTO.inno);

@@ -115,9 +115,6 @@
 								<div id="client_table_content" class="kt-portlet">
 									<div class="kt-portlet__head kt-portlet__head--lg">
 										<div class="kt-portlet__head-label">
-										<span class="kt-portlet__head-icon">
-											<i class="kt-font-brand flaticon2-line-chart"></i>
-										</span>
 											<h3 class="kt-portlet__head-title">
 												Client Overview
 											</h3>
@@ -170,6 +167,14 @@
 
                                             </h3>
                                         </div>
+										<div class="kt-portlet__head-toolbar">
+											<div class="kt-portlet__head-wrapper">
+												<button id="back_btn" type="reset" class="btn btn-primary"
+														style="background-color: #f8b500;border-color: #f8b500">Back
+												</button>
+											</div>
+										</div>
+
                                     </div>
                                     <form class="kt-form">
                                         <div class="kt-portlet__body">
@@ -188,21 +193,8 @@
                                             <div class="row">
                                                 <div class="form-group col-6">
                                                     <label>City/Country</label>
-                                                    <select class="form-control kt-select2" id="city_select" name="param">
-                                                        <optgroup label="Asia">
-                                                            <option value="1">Shanghai,China</option>
-                                                            <option value="2">Beijing,China</option>
-                                                        </optgroup>
-                                                        <optgroup label="Europe">
-                                                            <option value="3">London,UK</option>
-                                                            <option value="4">Paris,France</option>
-                                                        </optgroup>
-                                                        <optgroup label="North America">
-                                                            <option value="5">New York,USA</option>
-                                                            <option value="6">Miami,USA</option>
-                                                        </optgroup>
-                                                    </select>
-                                                </div>
+													<input id="city" type="text" class="form-control" placeholder="Enter your client's postal code">
+												</div>
                                                 <div class="form-group col-6">
                                                     <label >Postal Code</label>
                                                     <input id="postal_code" type="text" class="form-control" placeholder="Enter your client's postal code">
@@ -215,17 +207,7 @@
                                                 <input id="address" type="text" class="form-control" placeholder="Enter your client's address">
                                             </div>
                                         </div>
-                                        <div class="kt-portlet__foot">
-                                            <div class="kt-form__actions row">
-                                                <div class="col-1">
-                                                    <button id="back_btn" type="reset" class="btn btn-primary"
-                                                            style="background-color: #f8b500;border-color: #f8b500">Back
-                                                    </button>
-                                                </div>
-                                                <div class="col-11"></div>
 
-                                            </div>
-                                        </div>
                                     </form>
 
                                 </div>
@@ -302,21 +284,6 @@
 						</div>
 					</div>
 
-					<!-- begin:: Footer -->
-					<div class="kt-footer kt-grid__item" id="kt_footer">
-						<div class="kt-container">
-							<div class="kt-footer__wrapper">
-								<div class="kt-footer__copyright">
-									2019&nbsp;&copy;&nbsp;<a href="http://keenthemes.com/metronic" target="_blank" class="kt-link">Keenthemes</a>
-								</div>
-								<div class="kt-footer__menu">
-									<a href="http://keenthemes.com/metronic" target="_blank" class="kt-link">About</a>
-									<a href="http://keenthemes.com/metronic" target="_blank" class="kt-link">Team</a>
-									<a href="http://keenthemes.com/metronic" target="_blank" class="kt-link">Contact</a>
-								</div>
-							</div>
-						</div>
-					</div>
 
 					<!-- end:: Footer -->
 				</div>

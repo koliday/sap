@@ -25,9 +25,9 @@ $(document).ready(function () {
             dataType: "json",
             success: function (data) {
                 if(data!=null){
+                    $("#city").val(data.citystr);
                     $("#client_name").val(data.clname);
                     $("#office_tel").val(data.clcontact);
-                    $("#city_select").val(data.city);
                     $("#postal_code").val(data.postcode);
                     $("#address").val(data.claddress);
 
